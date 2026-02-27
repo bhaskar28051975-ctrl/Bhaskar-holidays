@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Bhaskar Holidays</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #e8730a; --dark: #1a1a2e; --green: #10b981;
+      --danger: #ef4444; --bg: #fff8f0; --card: #fff;
+      --border: #ffe0c0; --muted: #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); min-height: 100vh; }
+
+    /* TOP BAR */
+    .topbar {
+      background: var(--dark); color: #fff;
+      padding: 0 5%; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .topbar h1 { font-family: 'Syne', sans-serif; font-size: 1.3rem; }
+    .topbar h1 span { color: var(--primary); }
+    .topbar-links { display: flex; gap: 1rem; }
+    .topbar-links a {
+      color: rgba(255,255,255,0.7); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500;
+      padding: 5px 12px; border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .topbar-links a:hover, .topbar-links a.active { background: var(--primary); color: #fff; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem 5%; }
+
+    /* TABS */
+    .tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .tab {
+      padding: 0.6rem 1.5rem; border-radius: 10px;
+      border: 2px solid var(--border); background: #fff;
+      color: var(--dark); font-weight: 700; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    /* PANELS */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* GRID */
+    .admin-layout { display: grid; grid-template-columns: 380px 1fr; gap: 2rem; align-items: start; }
+    @media (max-width: 900px) { .admin-layout { grid-template-columns: 1fr; } }
+
+    /* CARD */
+    .card {
+      background: var(--card); border-radius: 18px; padding: 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    .card-title {
+      font-family: 'Syne', sans-serif; font-size: 1rem;
+      color: var(--dark); margin-bottom: 1.2rem;
+      padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg);
+    }
+
+    /* FORM */
+    .field { margin-bottom: 1rem; }
+    .field label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 5px; }
+    .field input, .field textarea, .field select {
+      width: 100%; padding: 10px 12px;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      font-size: 14px; font-family: 'DM Sans', sans-serif;
+      background: #fffaf5; color: var(--dark); outline: none;
+      transition: border-color 0.2s;
+    }
+    .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--primary); background: #fff; }
+    .field textarea { resize: vertical; min-height: 65px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* PHOTO MANAGER */
+    .photo-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
+    .photo-item { display: flex; align-items: center; gap: 8px; background: #fffaf5; border: 1.5px solid var(--border); border-radius: 10px; padding: 8px; }
+    .photo-item img { width: 52px; height: 38px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+    .photo-item input { flex: 1; padding: 6px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; background: #fff; outline: none; font-family: inherit; }
+    .photo-item input:focus { border-color: var(--primary); }
+    .photo-rm { background: none; border: none; color: var(--danger); font-size: 20px; cursor: pointer; padding: 0 4px; flex-shrink: 0; }
+    .add-photo-btn { width: 100%; padding: 8px; background: #fff3e0; border: 1.5px dashed var(--primary); border-radius: 10px; color: var(--primary); font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+    .add-photo-btn:hover { background: #ffe0b2; }
+
+    /* BUTTONS */
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .btn-full { width: 100%; justify-content: center; }
+    .btn-orange { background: var(--primary); color: #fff; }
+    .btn-orange:hover { background: #d4640a; }
+    .btn-green { background: var(--green); color: #fff; }
+    .btn-green:hover { background: #059669; }
+    .btn-red { background: var(--danger); color: #fff; }
+    .btn-red:hover { background: #dc2626; }
+    .btn-ghost { background: #f1f5f9; color: var(--dark); }
+    .btn-ghost:hover { background: #e2e8f0; }
+    .btn-sm { padding: 6px 14px; font-size: 13px; }
+
+    /* LIST ITEMS */
+    .list-item {
+      background: var(--card); border-radius: 14px;
+      border: 1px solid var(--border); overflow: hidden;
+      margin-bottom: 12px; animation: fadeUp 0.3s ease both;
+    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .list-header { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
+    .list-thumb { width: 64px; height: 48px; object-fit: cover; border-radius: 8px; flex-shrink: 0; background: #f0e6d6; }
+    .list-info { flex: 1; min-width: 0; }
+    .list-name { font-weight: 700; color: var(--dark); font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .list-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .list-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .edit-panel { display: none; padding: 16px; border-top: 1px solid var(--border); background: #fffaf5; }
+    .edit-panel.open { display: block; }
+
+    /* TAXI CARD */
+    .taxi-list-item .list-thumb { border-radius: 50%; width: 48px; height: 48px; }
+
+    /* MODAL */
+    .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; justify-content: center; align-items: center; }
+    .modal-bg.open { display: flex; }
+    .modal { background: #fff; border-radius: 18px; padding: 2rem; max-width: 340px; width: 90%; text-align: center; }
+    .modal h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .modal p { color: var(--muted); font-size: 14px; margin-bottom: 1.5rem; }
+    .modal-btns { display: flex; gap: 10px; }
+    .modal-btns .btn { flex: 1; justify-content: center; }
+
+    /* TOAST */
+    #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1a1a2e; color: #fff; padding: 12px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; z-index: 999; transition: transform 0.3s; pointer-events: none; }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* DRIVER SECTION */
+    .driver-page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+    .driver-page-card { background: var(--card); border-radius: 14px; padding: 1rem; border: 1px solid var(--border); text-align: center; cursor: pointer; transition: all 0.2s; }
+    .driver-page-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+    .driver-page-num { font-family: 'Syne', sans-serif; font-size: 2rem; color: var(--primary); }
+    .driver-page-name { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+    .driver-page-link { display: block; margin-top: 8px; font-size: 12px; color: var(--primary); font-weight: 700; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>Bhaskar <span>Holidays</span> — Admin</h1>
+  <div class="topbar-links">
+    <a href="index.html" target="_blank">🌐 View Site</a>
+  </div>
+</div>
+
+<div class="container">
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('packages')">🗺️ Packages</button>
+    <button class="tab" onclick="switchTab('taxis')">🚕 Taxis & Drivers</button>
+    <button class="tab" onclick="switchTab('gallery')">📷 Gallery</button>
+    <button class="tab" onclick="switchTab('drivers')">👨‍✈️ Driver Pages</button>
+  </div>
+
+  <!-- ═══ PACKAGES TAB ═══ -->
+  <div class="tab-panel active" id="tab-packages">
+    <div class="admin-layout">
+      <div class="card">
+        <div class="card-title">➕ Add New Package</div>
+        <div class="field"><label>Package Name</label><input id="p-name" placeholder="e.g. North Goa Sightseeing"></div>
+        <div class="field"><label>Category / Badge</label><input id="p-cat" placeholder="e.g. 🌴 Full Day Tour"></div>
+        <div class="field"><label>Description</label><textarea id="p-desc" placeholder="What's included in this tour..."></textarea></div>
+        <div class="field-row">
+          <div class="field"><label>Price (₹ per person)</label><input type="number" id="p-price" placeholder="1500"></div>
+          <div class="field"><label>Duration</label><input id="p-duration" placeholder="e.g. 8 Hours"></div>
+        </div>
+        <div class="field"><label>Includes (comma separated)</label><input id="p-includes" placeholder="AC Taxi, Driver, Fuel, Sightseeing"></div>
+        <div class="field">
+          <label>📷 Package Photos</label>
+          <div class="photo-list" id="p-photo-list"></div>
+          <button class="add-photo-btn" onclick="addPhoto('p-photo-list')">+ Add Photo URL</button>
+        </div>
+        <button class="btn btn-orange btn-full" style="margin-top:8px;" onclick="addPackage()">🗺️ Add Package</button>
+      </div>
+      <div class="card">
+        <div class="card-title">📋 All Packages <span id="pkg-count" style="font-size:12px;color:var(--muted);float:right;"></span></div>
+        <div id="pkg-list"><div style="text-align:center;color:var(--muted);padding:2rem;">Loading...</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAXIS TAB ═══ -->
+  <div class="tab-panel" id="tab-taxis">
+    <div class="admin-layout">
+      <div class="card">
+        <div class="card-title">➕ Add Taxi / Driver</div>
+        <div class="field"><label>Driver Name</label><input id="t-name" placeholder="e.g. Ramesh Kumar"></div>
+        <div class="field"><label>Driver Image URL</label><input id="t-driverimg" placeholder="https://...driver-photo.jpg"></div>
+        <div class="field"><label>Taxi Image URL</label><input id="t-taxiimg" placeholder="https://...taxi-photo.jpg"></div>
+        <div class="field-row">
+          <div class="field"><label>Taxi Number</label><input id="t-num" placeholder="GA-01-AB-1234"></div>
+          <div class="field"><label>Capacity (Seats)</label><input type="number" id="t-cap" placeholder="4" min="1" max="20"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Taxi Type</label>
+            <select id="t-type">
+              <option>Sedan</option><option>SUV</option><option>Innova</option>
+              <option>Tempo Traveller</option><option>Mini Bus</option>
+            </select>
+          </div>
+          <div class="field"><label>AC / Non-AC</label>
+            <select id="t-ac">
+              <option value="true">AC</option>
+              <option value="false">Non-AC</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label>Driver Page Number (1–50)</label><input type="number" id="t-pagenum" placeholder="e.g. 1" min="1" max="50"></div>
+        <button class="btn btn-orange btn-full" style="margin-top:8px;" onclick="addTaxi()">🚕 Add Taxi</button>
+      </div>
+      <div class="card">
+        <div class="card-title">🚕 All Taxis</div>
+        <div id="taxi-list"><div style="text-align:center;color:var(--muted);padding:2rem;">Loading...</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ GALLERY TAB ═══ -->
+  <div class="tab-panel" id="tab-gallery">
+    <div class="admin-layout">
+      <div class="card">
+        <div class="card-title">➕ Add Gallery Photo</div>
+        <div class="field"><label>Photo URL</label><input id="g-url" placeholder="https://...photo.jpg"></div>
+        <div class="field"><label>Caption (optional)</label><input id="g-caption" placeholder="Beautiful Goa sunset..."></div>
+        <div id="g-preview" style="margin:8px 0;"></div>
+        <button class="btn btn-orange btn-full" onclick="addGalleryPhoto()">📷 Add to Gallery</button>
+      </div>
+      <div class="card">
+        <div class="card-title">🖼️ Gallery Photos</div>
+        <div id="gallery-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ DRIVER PAGES TAB ═══ -->
+  <div class="tab-panel" id="tab-drivers">
+    <div class="card" style="margin-bottom:1rem;">
+      <div class="card-title">👨‍✈️ Driver Pages (1–50)</div>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1.5rem;">Each driver gets their own page. Link is <code>driver.html?id=1</code> to <code>driver.html?id=50</code>. Assign drivers from the Taxis tab using the Driver Page Number field.</p>
+      <div class="driver-page-grid" id="driver-pages-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal-bg" id="del-modal">
+  <div class="modal">
+    <h3>🗑️ Delete?</h3>
+    <p>This cannot be undone.</p>
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="closeDelModal()">Cancel</button>
+      <button class="btn btn-red" onclick="confirmDel()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+  import { getDatabase, ref, set, push, update, remove, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyB0_DZfEQc_uQF2Dx8WmUt4WkJ0sY8Jai4",
+    authDomain: "bhaskar-holidays.firebaseapp.com",
+    databaseURL: "https://bhaskar-holidays-default-rtdb.firebaseio.com",
+    projectId: "bhaskar-holidays",
+    storageBucket: "bhaskar-holidays.firebasestorage.app",
+    messagingSenderId: "1092104643884",
+    appId: "1:1092104643884:web:42bf618858028b51b3b889"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // ── TOAST ──
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // ── TABS ──
+  window.switchTab = (name) => {
+    document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['packages','taxis','gallery','drivers'][i] === name));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+  };
+
+  // ── PHOTO FIELD ──
+  window.addPhoto = (listId, val = '') => {
+    const list = document.getElementById(listId);
+    const item = document.createElement('div');
+    item.className = 'photo-item';
+    const img = document.createElement('img');
+    img.src = val || 'https://via.placeholder.com/80x60?text=IMG';
+    const inp = document.createElement('input'); inp.type = 'url'; inp.placeholder = 'https://...photo.jpg'; inp.value = val;
+    inp.oninput = () => img.src = inp.value || 'https://via.placeholder.com/80x60?text=IMG';
+    const rm = document.createElement('button'); rm.className = 'photo-rm'; rm.innerHTML = '×'; rm.onclick = () => item.remove();
+    item.append(img, inp, rm);
+    list.appendChild(item);
+  };
+
+  function getPhotos(listId) {
+    const photos = {};
+    let i = 0;
+    document.querySelectorAll(`#${listId} input[type=url]`).forEach(inp => {
+      if (inp.value.trim()) photos[`p${i++}`] = inp.value.trim();
+    });
+    return photos;
+  }
+
+  function val(id) { return document.getElementById(id)?.value?.trim() || ''; }
+  function clear(...ids) { ids.forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = ''; }); }
+
+  // ═══════════ PACKAGES ═══════════
+  window.addPackage = async () => {
+    const name = val('p-name');
+    if (!name) return toast('⚠️ Package name is required.');
+    const photos = getPhotos('p-photo-list');
+    const firstPhoto = Object.values(photos)[0] || '';
+    await push(ref(db, 'packages'), {
+      name, category: val('p-cat'), description: val('p-desc'),
+      price: val('p-price'), duration: val('p-duration'),
+      includes: val('p-includes'), photos, image: firstPhoto
+    });
+    clear('p-name','p-cat','p-desc','p-price','p-duration','p-includes');
+    document.getElementById('p-photo-list').innerHTML = '';
+    toast('✅ Package added!');
+  };
+
+  let delPath = null;
+  window.openDel = (path) => { delPath = path; document.getElementById('del-modal').classList.add('open'); };
+  window.closeDelModal = () => { delPath = null; document.getElementById('del-modal').classList.remove('open'); };
+  window.confirmDel = async () => {
+    if (!delPath) return;
+    await remove(ref(db, delPath));
+    closeDelModal(); toast('🗑️ Deleted.');
+  };
+
+  window.toggleEdit = (id) => {
+    document.getElementById('ep-' + id)?.classList.toggle('open');
+  };
+
+  window.savePkg = async (id) => {
+    const photos = getPhotos('pp-list-' + id);
+    const firstPhoto = Object.values(photos)[0] || '';
+    await update(ref(db, 'packages/' + id), {
+      name: val('pe-name-' + id), category: val('pe-cat-' + id),
+      description: val('pe-desc-' + id), price: val('pe-price-' + id),
+      duration: val('pe-dur-' + id), includes: val('pe-inc-' + id),
+      photos, image: firstPhoto
+    });
+    document.getElementById('ep-' + id).classList.remove('open');
+    toast('✅ Package updated!');
+  };
+
+  onValue(ref(db, 'packages'), (snap) => {
+    const list = document.getElementById('pkg-list');
+    const data = snap.val();
+    if (!data) { list.innerHTML = '<div style="text-align:center;color:var(--muted);padding:2rem;">No packages yet.</div>'; document.getElementById('pkg-count').textContent = ''; return; }
+    const keys = Object.keys(data);
+    document.getElementById('pkg-count').textContent = keys.length + ' packages';
+    list.innerHTML = '';
+    keys.forEach((id, i) => {
+      const p = data[id];
+      const photos = p.photos ? Object.values(p.photos) : (p.image ? [p.image] : []);
+      const thumb = photos[0] || 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=200';
+      const el = document.createElement('div');
+      el.className = 'list-item'; el.style.animationDelay = i * 50 + 'ms';
+      el.innerHTML = `
+        <div class="list-header">
+          <img class="list-thumb" src="${thumb}" alt="">
+          <div class="list-info">
+            <div class="list-name">${p.name}</div>
+            <div class="list-meta">₹${p.price}/person • ${p.duration || ''} • ${photos.length} photo(s)</div>
+          </div>
+          <div class="list-actions">
+            <button class="btn btn-ghost btn-sm" onclick="toggleEdit('${id}')">✏️</button>
+            <button class="btn btn-red btn-sm" onclick="openDel('packages/${id}')">🗑️</button>
+          </div>
+        </div>
+        <div class="edit-panel" id="ep-${id}">
+          <div class="field-row">
+            <div class="field"><label>Name</label><input id="pe-name-${id}" value="${p.name}"></div>
+            <div class="field"><label>Category</label><input id="pe-cat-${id}" value="${p.category||''}"></div>
+          </div>
+          <div class="field"><label>Description</label><textarea id="pe-desc-${id}">${p.description||''}</textarea></div>
+          <div class="field-row">
+            <div class="field"><label>Price ₹</label><input type="number" id="pe-price-${id}" value="${p.price||''}"></div>
+            <div class="field"><label>Duration</label><input id="pe-dur-${id}" value="${p.duration||''}"></div>
+          </div>
+          <div class="field"><label>Includes</label><input id="pe-inc-${id}" value="${p.includes||''}"></div>
+          <div class="field">
+            <label>Photos</label>
+            <div class="photo-list" id="pp-list-${id}"></div>
+            <button class="add-photo-btn" onclick="addPhoto('pp-list-${id}')">+ Add Photo</button>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <button class="btn btn-green btn-sm" onclick="savePkg('${id}')">💾 Save</button>
+            <button class="btn btn-ghost btn-sm" onclick="toggleEdit('${id}')">Cancel</button>
+          </div>
+        </div>
+      `;
+      list.appendChild(el);
+      // populate photos in edit panel
+      photos.forEach(u => addPhoto('pp-list-' + id, u));
+    });
+  });
+
+  // ═══════════ TAXIS ═══════════
+  window.addTaxi = async () => {
+    const name = val('t-name');
+    if (!name) return toast('⚠️ Driver name is required.');
+    const pageNum = parseInt(val('t-pagenum')) || null;
+    await push(ref(db, 'taxis'), {
+      driverName: name,
+      driverImage: val('t-driverimg'),
+      taxiImage: val('t-taxiimg'),
+      taxiNumber: val('t-num'),
+      capacity: val('t-cap') || '4',
+      type: val('t-type') || 'Sedan',
+      ac: document.getElementById('t-ac').value === 'true',
+      pageNumber: pageNum
+    });
+    clear('t-name','t-driverimg','t-taxiimg','t-num','t-cap','t-pagenum');
+    toast('✅ Taxi added!');
+  };
+
+  window.saveTaxi = async (id) => {
+    await update(ref(db, 'taxis/' + id), {
+      driverName: val('te-name-' + id),
+      driverImage: val('te-dimg-' + id),
+      taxiImage: val('te-timg-' + id),
+      taxiNumber: val('te-num-' + id),
+      capacity: val('te-cap-' + id),
+      type: val('te-type-' + id),
+      pageNumber: parseInt(val('te-page-' + id)) || null
+    });
+    document.getElementById('tet-' + id).classList.remove('open');
+    toast('✅ Taxi updated!');
+  };
+
+  window.toggleTaxiEdit = (id) => document.getElementById('tet-' + id)?.classList.toggle('open');
+
+  onValue(ref(db, 'taxis'), (snap) => {
+    const list = document.getElementById('taxi-list');
+    const data = snap.val();
+    if (!data) { list.innerHTML = '<div style="text-align:center;color:var(--muted);padding:2rem;">No taxis yet.</div>'; return; }
+    list.innerHTML = '';
+    Object.entries(data).forEach(([id, t], i) => {
+      const el = document.createElement('div');
+      el.className = 'list-item taxi-list-item'; el.style.animationDelay = i * 50 + 'ms';
+      const avatar = t.driverImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(t.driverName||'D')}&background=e8730a&color=fff`;
+      el.innerHTML = `
+        <div class="list-header">
+          <img class="list-thumb" src="${avatar}" alt="">
+          <div class="list-info">
+            <div class="list-name">${t.driverName}</div>
+            <div class="list-meta">${t.taxiNumber || ''} • ${t.type} • ${t.capacity} seats ${t.pageNumber ? '• Page #' + t.pageNumber : ''}</div>
+          </div>
+          <div class="list-actions">
+            <button class="btn btn-ghost btn-sm" onclick="toggleTaxiEdit('${id}')">✏️</button>
+            <button class="btn btn-red btn-sm" onclick="openDel('taxis/${id}')">🗑️</button>
+          </div>
+        </div>
+        <div class="edit-panel" id="tet-${id}">
+          <div class="field-row">
+            <div class="field"><label>Driver Name</label><input id="te-name-${id}" value="${t.driverName||''}"></div>
+            <div class="field"><label>Page # (1-50)</label><input type="number" id="te-page-${id}" value="${t.pageNumber||''}"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Driver Image URL</label><input id="te-dimg-${id}" value="${t.driverImage||''}"></div>
+            <div class="field"><label>Taxi Image URL</label><input id="te-timg-${id}" value="${t.taxiImage||''}"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Taxi Number</label><input id="te-num-${id}" value="${t.taxiNumber||''}"></div>
+            <div class="field"><label>Capacity</label><input type="number" id="te-cap-${id}" value="${t.capacity||4}"></div>
+          </div>
+          <div class="field"><label>Taxi Type</label>
+            <select id="te-type-${id}">
+              ${['Sedan','SUV','Innova','Tempo Traveller','Mini Bus'].map(o => `<option ${o===t.type?'selected':''}>${o}</option>`).join('')}
+            </select>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <button class="btn btn-green btn-sm" onclick="saveTaxi('${id}')">💾 Save</button>
+            <button class="btn btn-ghost btn-sm" onclick="toggleTaxiEdit('${id}')">Cancel</button>
+          </div>
+        </div>
+      `;
+      list.appendChild(el);
+    });
+  });
+
+  // ═══════════ GALLERY ═══════════
+  document.getElementById('g-url').oninput = (e) => {
+    const prev = document.getElementById('g-preview');
+    prev.innerHTML = e.target.value ? `<img src="${e.target.value}" style="width:100%;border-radius:10px;max-height:120px;object-fit:cover;">` : '';
+  };
+
+  window.addGalleryPhoto = async () => {
+    const url = val('g-url');
+    if (!url) return toast('⚠️ Please enter a photo URL.');
+    await push(ref(db, 'gallery'), { url, caption: val('g-caption') });
+    clear('g-url','g-caption');
+    document.getElementById('g-preview').innerHTML = '';
+    toast('✅ Photo added to gallery!');
+  };
+
+  onValue(ref(db, 'gallery'), (snap) => {
+    const list = document.getElementById('gallery-list');
+    const data = snap.val();
+    if (!data) { list.innerHTML = '<div style="color:var(--muted);grid-column:1/-1;text-align:center;padding:2rem;">No photos yet.</div>'; return; }
+    list.innerHTML = '';
+    Object.entries(data).forEach(([id, g]) => {
+      const url = g.url || g;
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'position:relative;border-radius:10px;overflow:hidden;';
+      wrap.innerHTML = `
+        <img src="${url}" style="width:100%;height:90px;object-fit:cover;display:block;">
+        <button onclick="openDel('gallery/${id}')" style="position:absolute;top:4px;right:4px;background:rgba(239,68,68,0.9);color:#fff;border:none;border-radius:6px;padding:2px 7px;cursor:pointer;font-size:14px;">×</button>
+      `;
+      list.appendChild(wrap);
+    });
+  });
+
+  // ═══════════ DRIVER PAGES ═══════════
+  const grid = document.getElementById('driver-pages-grid');
+  onValue(ref(db, 'taxis'), (snap) => {
+    const drivers = snap.val() || {};
+    const pageMap = {};
+    Object.values(drivers).forEach(d => { if(d.pageNumber) pageMap[d.pageNumber] = d.driverName; });
+    grid.innerHTML = '';
+    for (let i = 1; i <= 50; i++) {
+      const card = document.createElement('div');
+      card.className = 'driver-page-card';
+      card.innerHTML = `
+        <div class="driver-page-num">#${i}</div>
+        <div class="driver-page-name">${pageMap[i] || 'Unassigned'}</div>
+        <a class="driver-page-link" href="driver.html?id=${i}" target="_blank">Open Page →</a>
+      `;
+      grid.appendChild(card);
+    }
+  });
+</script>
+</body>
+</html>

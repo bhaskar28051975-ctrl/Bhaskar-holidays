@@ -6,45 +6,20 @@
   <title>Driver Page - Bhaskar Holidays</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root { --primary: #e8730a; --dark: #1a1a2e; --light: #fff8f0; --muted: #64748b; --border: #ffe0c0; }
+    :root { --primary: #e8730a; --dark: #1a1a2e; --light: #fff8f0; --muted: #64748b; --border: #ffe0c0; --green: #25d366; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; background: var(--light); min-height: 100vh; color: var(--dark); }
 
     /* HEADER */
-    .header {
-      background: linear-gradient(135deg, var(--dark) 0%, #0f3460 100%);
-      padding: 2.5rem 5%; color: #fff;
-      position: relative; overflow: hidden;
-    }
-    .header::before {
-      content: ''; position: absolute; inset: 0;
-      background: url('https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=1200') center/cover;
-      opacity: 0.1;
-    }
+    .header { background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%); padding: 2.5rem 5%; color: #fff; position: relative; overflow: hidden; }
+    .header::before { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=1200') center/cover; opacity: 0.1; }
     .header-content { position: relative; max-width: 800px; margin: 0 auto; text-align: center; }
     .brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: rgba(255,255,255,0.6); margin-bottom: 1.5rem; letter-spacing: 1px; }
     .brand span { color: var(--primary); }
-
-    /* DRIVER PROFILE */
-    .driver-profile {
-      display: flex; flex-direction: column; align-items: center; gap: 1rem;
-    }
-    .driver-avatar-wrap {
-      position: relative;
-    }
-    .driver-avatar {
-      width: 110px; height: 110px; border-radius: 50%;
-      border: 4px solid var(--primary);
-      object-fit: cover; background: #f0e6d6;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-    .driver-verified {
-      position: absolute; bottom: 4px; right: 4px;
-      background: var(--primary); color: #fff;
-      border-radius: 50%; width: 26px; height: 26px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; border: 2px solid #fff;
-    }
+    .driver-profile { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+    .driver-avatar-wrap { position: relative; }
+    .driver-avatar { width: 110px; height: 110px; border-radius: 50%; border: 4px solid var(--primary); object-fit: cover; background: #f0e6d6; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+    .driver-verified { position: absolute; bottom: 4px; right: 4px; background: var(--primary); color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 2px solid #fff; }
     .driver-name { font-family: 'Playfair Display', serif; font-size: 2rem; }
     .driver-tagline { color: rgba(255,255,255,0.7); font-size: 0.95rem; }
     .driver-badges { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
@@ -54,15 +29,12 @@
     /* MAIN */
     .main { max-width: 800px; margin: 0 auto; padding: 2rem 5%; }
 
+    /* SECTION TITLE */
+    .section-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--dark); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+
     /* TAXI CARD */
-    .taxi-showcase {
-      background: #fff; border-radius: 20px;
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-      overflow: hidden; margin-bottom: 1.5rem;
-    }
-    .taxi-img-gallery { position: relative; height: 220px; background: #f0e6d6; }
-    .taxi-img-gallery img { width: 100%; height: 100%; object-fit: cover; }
+    .taxi-showcase { background: #fff; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 24px rgba(0,0,0,0.07); overflow: hidden; margin-bottom: 1.5rem; }
+    .taxi-img { width: 100%; height: 220px; object-fit: cover; background: #f0e6d6; display: block; }
     .taxi-info { padding: 1.5rem; }
     .taxi-info-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--dark); margin-bottom: 1rem; }
     .taxi-specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
@@ -70,63 +42,70 @@
     .spec-icon { font-size: 1.5rem; margin-bottom: 0.25rem; }
     .spec-value { font-weight: 700; color: var(--dark); font-size: 0.95rem; }
     .spec-label { color: var(--muted); font-size: 0.78rem; }
-    .taxi-number-plate {
-      margin-top: 1rem; background: var(--dark); color: #fff;
-      padding: 0.6rem 1.2rem; border-radius: 8px;
-      font-weight: 700; font-size: 1rem; display: inline-block;
-      letter-spacing: 2px;
-    }
+    .taxi-number-plate { margin-top: 1rem; background: var(--dark); color: #fff; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 700; font-size: 1rem; display: inline-block; letter-spacing: 2px; }
 
-    /* PACKAGES */
-    .section-title {
-      font-family: 'Playfair Display', serif; font-size: 1.4rem;
-      color: var(--dark); margin-bottom: 1rem;
-      display: flex; align-items: center; gap: 0.5rem;
-    }
-    .pkg-list { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
-    .pkg-row {
-      background: #fff; border-radius: 14px; padding: 1rem 1.2rem;
-      border: 1px solid var(--border); display: flex;
-      align-items: center; gap: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .pkg-row:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(232,115,10,0.1); }
-    .pkg-row-img { width: 70px; height: 56px; border-radius: 10px; object-fit: cover; flex-shrink: 0; background: #f0e6d6; }
-    .pkg-row-info { flex: 1; }
-    .pkg-row-name { font-weight: 700; color: var(--dark); margin-bottom: 2px; }
-    .pkg-row-desc { font-size: 0.82rem; color: var(--muted); }
-    .pkg-row-price { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--primary); font-weight: 900; white-space: nowrap; }
+    /* DRIVER GALLERY */
+    .gallery-section { background: #fff; border-radius: 20px; border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.05); }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .gallery-grid img { width: 100%; height: 100px; object-fit: cover; border-radius: 10px; cursor: pointer; transition: transform 0.2s, opacity 0.2s; }
+    .gallery-grid img:hover { transform: scale(1.03); opacity: 0.9; }
+    @media (max-width: 480px) { .gallery-grid { grid-template-columns: repeat(2,1fr); } }
 
-    /* CTA */
-    .cta-box {
-      background: linear-gradient(135deg, var(--primary), #d4640a);
-      border-radius: 20px; padding: 2rem; text-align: center; color: #fff;
-      margin-bottom: 1.5rem;
-    }
+    /* PACKAGES — FULL DETAIL CARD */
+    .pkg-card { background: #fff; border-radius: 18px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 1.2rem; box-shadow: 0 4px 16px rgba(0,0,0,0.06); transition: transform 0.2s; }
+    .pkg-card:hover { transform: translateY(-3px); }
+    .pkg-img-wrap { position: relative; height: 180px; background: #f0e6d6; overflow: hidden; }
+    .pkg-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.5s; }
+    .pkg-img-wrap img.active { opacity: 1; }
+    .pg-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.85); border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2); z-index: 2; }
+    .pg-prev { left: 8px; } .pg-next { right: 8px; }
+    .pkg-cat-badge { position: absolute; top: 12px; left: 12px; background: var(--primary); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+    .pkg-body { padding: 1.2rem; }
+    .pkg-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--dark); margin-bottom: 0.4rem; }
+    .pkg-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 0.75rem; }
+    .pkg-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0.75rem; }
+    .pkg-tag { background: #fff3e0; color: var(--primary); font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 6px; }
+    .pkg-footer { display: flex; align-items: center; justify-content: space-between; }
+    .pkg-price { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); font-weight: 900; }
+    .pkg-price small { font-size: 0.7rem; color: var(--muted); font-family: 'DM Sans', sans-serif; font-weight: 400; }
+    .pkg-meta { display: flex; gap: 1rem; font-size: 0.82rem; color: var(--muted); margin-bottom: 0.75rem; }
+
+    /* BOOK BUTTONS — DUAL WHATSAPP */
+    .book-btns { display: flex; flex-direction: column; gap: 6px; }
+    .book-btn { padding: 8px 14px; border-radius: 8px; font-weight: 700; font-size: 12px; text-decoration: none; display: flex; align-items: center; gap: 5px; justify-content: center; transition: all 0.2s; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .book-driver { background: var(--green); color: #fff; }
+    .book-driver:hover { background: #1ebe5d; }
+    .book-admin { background: var(--primary); color: #fff; }
+    .book-admin:hover { background: #d4640a; }
+
+    /* CTA BOX */
+    .cta-box { background: linear-gradient(135deg, var(--primary), #d4640a); border-radius: 20px; padding: 2rem; text-align: center; color: #fff; margin-bottom: 1.5rem; }
     .cta-box h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.5rem; }
-    .cta-box p { opacity: 0.9; margin-bottom: 1.5rem; }
-    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .cta-btn {
-      padding: 0.8rem 1.8rem; border-radius: 10px;
-      font-weight: 700; font-size: 1rem; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 6px;
-      transition: all 0.2s;
-    }
-    .cta-wa { background: #25d366; color: #fff; }
-    .cta-wa:hover { background: #1ebe5d; }
-    .cta-call { background: rgba(255,255,255,0.2); color: #fff; border: 2px solid rgba(255,255,255,0.5); }
-    .cta-call:hover { background: rgba(255,255,255,0.3); }
+    .cta-box p { opacity: 0.9; margin-bottom: 1.5rem; font-size: 0.95rem; }
+    .cta-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+    .cta-btn { padding: 0.8rem 1.6rem; border-radius: 10px; font-weight: 700; font-size: 0.95rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; }
+    .cta-wa-driver { background: var(--green); color: #fff; }
+    .cta-wa-driver:hover { background: #1ebe5d; }
+    .cta-wa-admin { background: rgba(255,255,255,0.2); color: #fff; border: 2px solid rgba(255,255,255,0.5); }
+    .cta-wa-admin:hover { background: rgba(255,255,255,0.3); }
+    .cta-call { background: rgba(255,255,255,0.15); color: #fff; border: 2px solid rgba(255,255,255,0.3); }
+    .cta-call:hover { background: rgba(255,255,255,0.25); }
 
-    /* NOT FOUND */
+    /* LIGHTBOX */
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.93); z-index: 2000; justify-content: center; align-items: center; flex-direction: column; gap: 1rem; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 92vw; max-height: 82vh; border-radius: 12px; object-fit: contain; }
+    .lb-close { position: absolute; top: 16px; right: 20px; background: none; border: none; color: #fff; font-size: 32px; cursor: pointer; }
+    .lb-nav { display: flex; gap: 1rem; }
+    .lb-nav button { background: rgba(255,255,255,0.15); color: #fff; border: none; border-radius: 8px; padding: 8px 20px; font-size: 18px; cursor: pointer; }
+
+    /* WA FLOAT */
+    .wa-float { position: fixed; bottom: 24px; right: 24px; background: var(--green); color: #fff; width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.5); z-index: 99; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.5); } 50% { box-shadow: 0 4px 40px rgba(37,211,102,0.8); } }
+
     .not-found { text-align: center; padding: 4rem 2rem; }
     .not-found h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--dark); }
     .not-found p { color: var(--muted); margin-top: 0.5rem; }
-
-    /* WA FLOAT */
-    .wa-float { position: fixed; bottom: 24px; right: 24px; background: #25d366; color: #fff; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.5); z-index: 99; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.5); } 50% { box-shadow: 0 4px 40px rgba(37,211,102,0.8); } }
-
     .loading { text-align: center; padding: 4rem; color: var(--muted); }
 
     @media (max-width: 480px) { .taxi-specs { grid-template-columns: repeat(2,1fr); } .cta-btns { flex-direction: column; } }
@@ -134,11 +113,21 @@
 </head>
 <body>
 
-<div id="app"><div class="loading">⏳ Loading driver page...</div></div>
+<div id="app"><div class="loading">⏳ Loading...</div></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-nav">
+    <button onclick="lbNav(-1)">‹ Prev</button>
+    <button onclick="lbNav(1)">Next ›</button>
+  </div>
+</div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-  import { getDatabase, ref, onValue, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyB0_DZfEQc_uQF2Dx8WmUt4WkJ0sY8Jai4",
@@ -152,137 +141,192 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
+  const ADMIN_WA = '919154095125';
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const pageId = parseInt(urlParams.get('id')) || 1;
+  const pageId = parseInt(new URLSearchParams(window.location.search).get('id')) || 1;
   document.title = `Driver #${pageId} - Bhaskar Holidays`;
 
-  let packagesData = {};
+  // Lightbox
+  let lbImgs = [], lbIdx = 0;
+  window.openLb = (imgs, idx) => { lbImgs = imgs; lbIdx = idx; document.getElementById('lb-img').src = lbImgs[lbIdx]; document.getElementById('lightbox').classList.add('open'); };
+  window.closeLb = () => document.getElementById('lightbox').classList.remove('open');
+  window.lbNav = (d) => { lbIdx = (lbIdx + d + lbImgs.length) % lbImgs.length; document.getElementById('lb-img').src = lbImgs[lbIdx]; };
 
-  // Load packages first
+  // Package gallery nav
+  const pgCur = {};
+  window.pgNav = (id, dir, total) => {
+    if (pgCur[id] === undefined) pgCur[id] = 0;
+    const wrap = document.getElementById('pg-' + id);
+    const imgs = wrap.querySelectorAll('img');
+    imgs[pgCur[id]].classList.remove('active');
+    pgCur[id] = (pgCur[id] + dir + total) % total;
+    imgs[pgCur[id]].classList.add('active');
+  };
+
+  let pkgsData = {}, driverData = null;
+
+  // Load both packages and taxis
   onValue(ref(db, 'packages'), (pSnap) => {
-    packagesData = pSnap.val() || {};
-    loadDriver();
+    pkgsData = pSnap.val() || {};
+    if (driverData) renderPage();
   }, { onlyOnce: true });
 
-  function loadDriver() {
-    onValue(ref(db, 'taxis'), (snap) => {
-      const data = snap.val();
-      const appEl = document.getElementById('app');
+  onValue(ref(db, 'taxis'), (snap) => {
+    const data = snap.val();
+    const appEl = document.getElementById('app');
+    if (!data) { renderNotFound(appEl); return; }
+    const entry = Object.entries(data).find(([, d]) => d.pageNumber == pageId);
+    if (!entry) { renderNotFound(appEl); return; }
+    driverData = entry[1];
+    if (Object.keys(pkgsData).length >= 0) renderPage();
+  }, { onlyOnce: true });
 
-      if (!data) { renderNotFound(appEl); return; }
+  function renderPage() {
+    const driver = driverData;
+    const appEl = document.getElementById('app');
+    const driverWa = driver.whatsapp || ADMIN_WA;
+    const avatar = driver.driverImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(driver.driverName||'Driver')}&background=e8730a&color=fff&size=200`;
+    const galleryPhotos = driver.gallery ? Object.values(driver.gallery) : [];
 
-      // Find driver assigned to this page number
-      const entry = Object.entries(data).find(([, d]) => d.pageNumber == pageId);
+    // Build WA message
+    const waMsg = encodeURIComponent(`Hi ${driver.driverName}! I found your page on Bhaskar Holidays and want to book a Goa tour.`);
+    const waAdminMsg = encodeURIComponent(`Hi! I want to book a tour with driver ${driver.driverName} (Page #${pageId}) from Bhaskar Holidays.`);
 
-      if (!entry) { renderNotFound(appEl); return; }
-
-      const [, driver] = entry;
-      const waNum = driver.whatsapp || '919154095125';
-      const avatar = driver.driverImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(driver.driverName||'Driver')}&background=e8730a&color=fff&size=200`;
-
-      appEl.innerHTML = `
-        <!-- HEADER -->
-        <div class="header">
-          <div class="header-content">
-            <div class="brand">Bhaskar <span>Holidays</span></div>
-            <div class="driver-profile">
-              <div class="driver-avatar-wrap">
-                <img class="driver-avatar" src="${avatar}" alt="${driver.driverName}">
-                <div class="driver-verified">✓</div>
-              </div>
-              <div class="driver-name">${driver.driverName}</div>
-              <div class="driver-tagline">Your personal Goa tour guide 🌴</div>
-              <div class="driver-badges">
-                <span class="badge primary">Driver #${pageId}</span>
-                <span class="badge">⭐ Verified</span>
-                <span class="badge">${driver.type || 'Sedan'}</span>
-                <span class="badge">👥 ${driver.capacity || 4} Seater</span>
-                ${driver.ac ? '<span class="badge">❄️ AC</span>' : ''}
-              </div>
+    appEl.innerHTML = `
+      <!-- HEADER -->
+      <div class="header">
+        <div class="header-content">
+          <div class="brand">Bhaskar <span>Holidays</span></div>
+          <div class="driver-profile">
+            <div class="driver-avatar-wrap">
+              <img class="driver-avatar" src="${avatar}" alt="${driver.driverName}">
+              <div class="driver-verified">✓</div>
+            </div>
+            <div class="driver-name">${driver.driverName}</div>
+            <div class="driver-tagline">Your personal Goa tour guide 🌴</div>
+            <div class="driver-badges">
+              <span class="badge primary">Driver #${pageId}</span>
+              <span class="badge">⭐ Verified</span>
+              <span class="badge">${driver.type || 'Taxi'}</span>
+              <span class="badge">👥 ${driver.capacity || 4} Seater</span>
+              ${driver.ac ? '<span class="badge">❄️ AC</span>' : ''}
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- MAIN -->
-        <div class="main">
+      <div class="main">
 
-          <!-- TAXI SHOWCASE -->
-          <div class="taxi-showcase">
-            <div class="taxi-img-gallery">
-              <img src="${driver.taxiImage || 'https://images.unsplash.com/photo-1609520505218-7421df820a28?w=700'}" alt="Taxi">
+        <!-- TAXI INFO -->
+        <div class="taxi-showcase">
+          <img class="taxi-img" src="${driver.taxiImage || ''}" alt="Taxi" onerror="this.style.background='#f0e6d6'">
+          <div class="taxi-info">
+            <div class="taxi-info-title">🚕 My Taxi Details</div>
+            <div class="taxi-specs">
+              <div class="spec"><div class="spec-icon">🚗</div><div class="spec-value">${driver.type || 'Taxi'}</div><div class="spec-label">Car Model</div></div>
+              <div class="spec"><div class="spec-icon">👥</div><div class="spec-value">${driver.capacity || 4}</div><div class="spec-label">Seater</div></div>
+              <div class="spec"><div class="spec-icon">${driver.ac ? '❄️' : '🌬️'}</div><div class="spec-value">${driver.ac ? 'AC' : 'Non-AC'}</div><div class="spec-label">Comfort</div></div>
             </div>
-            <div class="taxi-info">
-              <div class="taxi-info-title">🚕 My Taxi Details</div>
-              <div class="taxi-specs">
-                <div class="spec"><div class="spec-icon">🚗</div><div class="spec-value">${driver.type || 'Sedan'}</div><div class="spec-label">Vehicle Type</div></div>
-                <div class="spec"><div class="spec-icon">👥</div><div class="spec-value">${driver.capacity || 4}</div><div class="spec-label">Seater Capacity</div></div>
-                <div class="spec"><div class="spec-icon">${driver.ac ? '❄️' : '🌬️'}</div><div class="spec-value">${driver.ac ? 'Yes' : 'No'}</div><div class="spec-label">Air Conditioning</div></div>
-              </div>
-              ${driver.taxiNumber ? `<div class="taxi-number-plate">🔢 ${driver.taxiNumber}</div>` : ''}
-            </div>
-          </div>
-
-          <!-- PACKAGES -->
-          <div class="section-title">🗺️ Available Tour Packages</div>
-          <div class="pkg-list" id="pkg-list-section"></div>
-
-          <!-- CTA -->
-          <div class="cta-box">
-            <h3>Ready to Explore Goa? 🌴</h3>
-            <p>Book directly with ${driver.driverName} for a personalised tour experience.</p>
-            <div class="cta-btns">
-              <a class="cta-btn cta-wa" href="https://wa.me/${waNum}?text=Hi%20${encodeURIComponent(driver.driverName)}!%20I%20found%20your%20page%20on%20Bhaskar%20Holidays%20and%20want%20to%20book%20a%20Goa%20tour." target="_blank">💬 WhatsApp</a>
-              <a class="cta-btn cta-call" href="tel:+${waNum}">📞 Call Now</a>
-            </div>
+            ${driver.taxiNumber ? `<div class="taxi-number-plate">🔢 ${driver.taxiNumber}</div>` : ''}
           </div>
         </div>
 
-        <!-- WA FLOAT -->
-        <a class="wa-float" href="https://wa.me/${waNum}?text=Hi!%20I%20want%20to%20book%20a%20tour%20with%20${encodeURIComponent(driver.driverName)}." target="_blank">💬</a>
+        <!-- DRIVER GALLERY -->
+        ${galleryPhotos.length > 0 ? `
+        <div class="gallery-section">
+          <div class="section-title">📷 My Photo Gallery</div>
+          <div class="gallery-grid" id="driver-gallery-grid"></div>
+        </div>` : ''}
+
+        <!-- PACKAGES -->
+        <div class="section-title">🗺️ Tour Packages</div>
+        <div id="pkg-section"></div>
+
+        <!-- CTA -->
+        <div class="cta-box">
+          <h3>Ready to Explore Goa? 🌴</h3>
+          <p>Book directly with ${driver.driverName}. Message goes to both driver & Bhaskar Holidays admin.</p>
+          <div class="cta-btns">
+            <a class="cta-btn cta-wa-driver" href="https://wa.me/${driverWa}?text=${waMsg}" target="_blank">💬 WhatsApp Driver</a>
+            <a class="cta-btn cta-wa-admin" href="https://wa.me/${ADMIN_WA}?text=${waAdminMsg}" target="_blank">📋 WhatsApp Admin</a>
+            <a class="cta-btn cta-call" href="tel:+${driverWa}">📞 Call Driver</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- WA FLOAT — Driver -->
+      <a class="wa-float" href="https://wa.me/${driverWa}?text=${waMsg}" target="_blank" title="Chat with Driver">💬</a>
+    `;
+
+    // Render driver gallery
+    if (galleryPhotos.length > 0) {
+      const galGrid = document.getElementById('driver-gallery-grid');
+      galleryPhotos.forEach((url, i) => {
+        const img = document.createElement('img');
+        img.src = url; img.alt = '';
+        img.onerror = () => img.style.background = '#f0e6d6';
+        img.onclick = () => openLb(galleryPhotos, i);
+        galGrid.appendChild(img);
+      });
+    }
+
+    // Render packages — FULL DETAIL
+    const pkgSection = document.getElementById('pkg-section');
+    const pkgEntries = Object.entries(pkgsData);
+    if (pkgEntries.length === 0) {
+      pkgSection.innerHTML = '<p style="color:var(--muted);text-align:center;padding:1rem;background:#fff;border-radius:14px;">No packages available yet.</p>';
+      return;
+    }
+
+    pkgEntries.forEach(([pkgId, pkg]) => {
+      const photos = pkg.photos ? Object.values(pkg.photos) : (pkg.image ? [pkg.image] : []);
+      const includes = pkg.includes ? pkg.includes.split(',').map(t => t.trim()).filter(Boolean) : [];
+      const pkgWaMsg = encodeURIComponent(`Hi ${driver.driverName}! I want to book the "${pkg.name}" package. Please confirm availability.`);
+      const pkgAdminMsg = encodeURIComponent(`Hi! I want to book "${pkg.name}" package with driver ${driver.driverName} (Page #${pageId}).`);
+
+      const card = document.createElement('div');
+      card.className = 'pkg-card';
+      card.innerHTML = `
+        <div class="pkg-img-wrap" id="pg-${pkgId}">
+          ${photos.length > 0
+            ? photos.map((u,i) => `<img src="${u}" class="${i===0?'active':''}" alt="${pkg.name}" onclick="openLb(${JSON.stringify(photos)},${i})">`).join('')
+            : '<img src="" class="active" alt="" style="background:#f0e6d6;">'
+          }
+          ${photos.length > 1 ? `<button class="pg-btn pg-prev" onclick="pgNav('${pkgId}',-1,${photos.length})">‹</button><button class="pg-btn pg-next" onclick="pgNav('${pkgId}',1,${photos.length})">›</button>` : ''}
+          ${pkg.category ? `<div class="pkg-cat-badge">${pkg.category}</div>` : ''}
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-name">${pkg.name}</div>
+          <div class="pkg-meta">
+            ${pkg.duration ? `<span>🕐 ${pkg.duration}</span>` : ''}
+            ${pkg.price ? `<span>₹${pkg.price}/person</span>` : ''}
+          </div>
+          ${pkg.description ? `<div class="pkg-desc">${pkg.description}</div>` : ''}
+          ${includes.length > 0 ? `<div class="pkg-tags">${includes.map(t => `<span class="pkg-tag">✓ ${t}</span>`).join('')}</div>` : ''}
+          <div class="pkg-footer">
+            <div class="pkg-price">₹${pkg.price || '—'} <small>/person</small></div>
+            <div class="book-btns">
+              <a class="book-btn book-driver" href="https://wa.me/${driverWa}?text=${pkgWaMsg}" target="_blank">💬 Book with Driver</a>
+              <a class="book-btn book-admin" href="https://wa.me/${ADMIN_WA}?text=${pkgAdminMsg}" target="_blank">📋 Book via Admin</a>
+            </div>
+          </div>
+        </div>
       `;
-
-      // Render packages
-      const pkgSection = document.getElementById('pkg-list-section');
-      const pkgEntries = Object.entries(packagesData);
-      if (pkgEntries.length === 0) {
-        pkgSection.innerHTML = '<p style="color:var(--muted);text-align:center;padding:1rem;">No packages available yet.</p>';
-      } else {
-        pkgEntries.forEach(([, pkg]) => {
-          const photos = pkg.photos ? Object.values(pkg.photos) : (pkg.image ? [pkg.image] : []);
-          const thumb = photos[0] || 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=200';
-          const row = document.createElement('div');
-          row.className = 'pkg-row';
-          row.innerHTML = `
-            <img class="pkg-row-img" src="${thumb}" alt="${pkg.name}">
-            <div class="pkg-row-info">
-              <div class="pkg-row-name">${pkg.name}</div>
-              <div class="pkg-row-desc">${pkg.duration || ''} ${pkg.includes ? '• ' + pkg.includes.split(',').slice(0,2).join(', ') : ''}</div>
-            </div>
-            <div>
-              <div class="pkg-row-price">₹${pkg.price}</div>
-              <a href="https://wa.me/${waNum}?text=Hi%20${encodeURIComponent(driver.driverName)}!%20I%20want%20to%20book%20the%20${encodeURIComponent(pkg.name)}%20package." target="_blank" style="display:block;text-align:center;margin-top:6px;background:var(--primary);color:#fff;padding:5px 12px;border-radius:8px;text-decoration:none;font-size:12px;font-weight:700;">Book</a>
-            </div>
-          `;
-          pkgSection.appendChild(row);
-        });
-      }
-
-    }, { onlyOnce: true });
+      pkgSection.appendChild(card);
+    });
   }
 
   function renderNotFound(el) {
     el.innerHTML = `
       <div class="header" style="min-height:200px;display:flex;align-items:center;justify-content:center;">
-        <div class="header-content">
-          <div class="brand">Bhaskar <span>Holidays</span></div>
-        </div>
+        <div class="header-content"><div class="brand">Bhaskar <span>Holidays</span></div></div>
       </div>
       <div class="main">
         <div class="not-found">
           <div style="font-size:4rem;margin-bottom:1rem;">🚕</div>
           <h2>Driver #${pageId} Not Found</h2>
-          <p>This driver page hasn't been assigned yet.</p>
+          <p>This page hasn't been assigned to a driver yet.</p>
           <br>
           <a href="index.html" style="color:var(--primary);font-weight:700;text-decoration:none;">← Back to Bhaskar Holidays</a>
         </div>

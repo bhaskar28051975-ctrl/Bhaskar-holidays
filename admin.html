@@ -3,167 +3,182 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Bhaskar Holidays</title>
+  <title>Admin — Bhaskar Holidays</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root { --primary: #e8730a; --dark: #1a1a2e; --green: #10b981; --danger: #ef4444; --bg: #fff8f0; --card: #fff; --border: #ffe0c0; --muted: #64748b; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg); min-height: 100vh; }
-    .topbar { background: var(--dark); color: #fff; padding: 0 5%; height: 60px; display: flex; align-items: center; justify-content: space-between; }
-    .topbar h1 { font-family: 'Syne', sans-serif; font-size: 1.3rem; }
-    .topbar h1 span { color: var(--primary); }
-    .topbar-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; font-weight: 500; padding: 5px 12px; border-radius: 6px; transition: all 0.2s; }
-    .topbar-links a:hover { background: var(--primary); color: #fff; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 2rem 5%; }
-    .tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
-    .tab { padding: 0.6rem 1.4rem; border-radius: 10px; border: 2px solid var(--border); background: #fff; color: var(--dark); font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; transition: all 0.2s; }
-    .tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-    .admin-layout { display: grid; grid-template-columns: 400px 1fr; gap: 2rem; align-items: start; }
-    @media (max-width: 900px) { .admin-layout { grid-template-columns: 1fr; } }
-    .card { background: var(--card); border-radius: 18px; padding: 1.5rem; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-    .card-title { font-family: 'Syne', sans-serif; font-size: 1rem; color: var(--dark); margin-bottom: 1.2rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg); }
-    .field { margin-bottom: 1rem; }
-    .field label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 5px; }
-    .field input, .field textarea, .field select { width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; background: #fffaf5; color: var(--dark); outline: none; transition: border-color 0.2s; }
-    .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--primary); background: #fff; }
-    .field textarea { resize: vertical; min-height: 65px; }
-    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .url-preview { width: 100%; margin-top: 6px; border-radius: 8px; max-height: 90px; object-fit: cover; display: none; border: 1px solid var(--border); }
-    .url-preview.show { display: block; }
-    .photo-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
-    .photo-item { display: flex; align-items: center; gap: 8px; background: #fffaf5; border: 1.5px solid var(--border); border-radius: 10px; padding: 8px; }
-    .photo-item img { width: 52px; height: 38px; object-fit: cover; border-radius: 6px; flex-shrink: 0; background: #eee; }
-    .photo-item input { flex: 1; padding: 6px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; background: #fff; outline: none; font-family: inherit; }
-    .photo-item input:focus { border-color: var(--primary); }
-    .photo-rm { background: none; border: none; color: var(--danger); font-size: 20px; cursor: pointer; padding: 0 4px; flex-shrink: 0; }
-    .add-photo-btn { width: 100%; padding: 8px; background: #fff3e0; border: 1.5px dashed var(--primary); border-radius: 10px; color: var(--primary); font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.2s; }
-    .add-photo-btn:hover { background: #ffe0b2; }
-    .info-box { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 10px; padding: 10px 14px; font-size: 13px; color: #166534; margin-bottom: 12px; line-height: 1.5; }
-    .info-box strong { display: block; margin-bottom: 3px; font-size: 13px; }
-    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
-    .btn-full { width: 100%; justify-content: center; }
-    .btn-orange { background: var(--primary); color: #fff; }
-    .btn-orange:hover { background: #d4640a; }
-    .btn-green { background: var(--green); color: #fff; }
-    .btn-green:hover { background: #059669; }
-    .btn-red { background: var(--danger); color: #fff; }
-    .btn-red:hover { background: #dc2626; }
-    .btn-ghost { background: #f1f5f9; color: var(--dark); }
-    .btn-ghost:hover { background: #e2e8f0; }
-    .btn-sm { padding: 6px 14px; font-size: 13px; }
-    .list-item { background: var(--card); border-radius: 14px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 12px; animation: fadeUp 0.3s ease both; }
-    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-    .list-header { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
-    .list-thumb { width: 64px; height: 48px; object-fit: cover; border-radius: 8px; flex-shrink: 0; background: #f0e6d6; }
-    .list-thumb.round { border-radius: 50%; width: 48px; height: 48px; }
-    .list-info { flex: 1; min-width: 0; }
-    .list-name { font-weight: 700; color: var(--dark); font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .list-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .list-actions { display: flex; gap: 6px; flex-shrink: 0; }
-    .edit-panel { display: none; padding: 16px; border-top: 1px solid var(--border); background: #fffaf5; }
-    .edit-panel.open { display: block; }
-    .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; justify-content: center; align-items: center; }
-    .modal-bg.open { display: flex; }
-    .modal { background: #fff; border-radius: 18px; padding: 2rem; max-width: 340px; width: 90%; text-align: center; }
-    .modal h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; margin-bottom: 0.5rem; }
-    .modal p { color: var(--muted); font-size: 14px; margin-bottom: 1.5rem; }
-    .modal-btns { display: flex; gap: 10px; }
-    .modal-btns .btn { flex: 1; justify-content: center; }
-    #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1a1a2e; color: #fff; padding: 12px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; z-index: 999; transition: transform 0.3s; pointer-events: none; }
-    #toast.show { transform: translateX(-50%) translateY(0); }
-    .driver-page-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; }
-    .driver-page-card { background: var(--card); border-radius: 14px; padding: 1rem; border: 1px solid var(--border); text-align: center; transition: all 0.2s; }
-    .driver-page-card:hover { border-color: var(--primary); transform: translateY(-2px); }
-    .driver-page-card.assigned { border-color: var(--green); background: #f0fdf4; }
-    .driver-page-num { font-family: 'Syne', sans-serif; font-size: 1.8rem; color: var(--primary); }
-    .driver-page-name { font-size: 0.78rem; color: var(--muted); margin-top: 4px; font-weight: 600; }
-    .driver-page-link { display: block; margin-top: 8px; font-size: 12px; color: var(--primary); font-weight: 700; text-decoration: none; }
-    .gal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px,1fr)); gap: 10px; }
-    .gal-item { position: relative; border-radius: 10px; overflow: hidden; }
-    .gal-item img { width: 100%; height: 80px; object-fit: cover; display: block; }
-    .gal-item button { position: absolute; top: 4px; right: 4px; background: rgba(239,68,68,0.9); color: #fff; border: none; border-radius: 6px; padding: 2px 7px; cursor: pointer; font-size: 14px; }
+    :root { --primary:#e8730a; --dark:#1a1a2e; --green:#10b981; --danger:#ef4444; --bg:#fff8f0; --card:#fff; --border:#ffe0c0; --muted:#64748b; }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    body{ font-family:'DM Sans',sans-serif; background:var(--bg); min-height:100vh; }
 
-    /* ── VIEW DETAILS POPUP ── */
-    .details-modal-bg {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.6); z-index: 600;
-      justify-content: center; align-items: center;
-      padding: 1rem; backdrop-filter: blur(4px);
+    /* TOPBAR */
+    .topbar{ background:var(--dark); color:#fff; padding:0 5%; height:60px; display:flex; align-items:center; justify-content:space-between; }
+    .topbar h1{ font-family:'Syne',sans-serif; font-size:1.3rem; }
+    .topbar h1 span{ color:var(--primary); }
+    .topbar a{ color:rgba(255,255,255,0.7); text-decoration:none; font-size:.9rem; font-weight:500; padding:5px 12px; border-radius:6px; transition:.2s; }
+    .topbar a:hover{ background:var(--primary); color:#fff; }
+
+    .container{ max-width:1200px; margin:0 auto; padding:2rem 5%; }
+
+    /* TABS */
+    .tabs{ display:flex; gap:.5rem; margin-bottom:2rem; flex-wrap:wrap; }
+    .tab{ padding:.6rem 1.4rem; border-radius:10px; border:2px solid var(--border); background:#fff; color:var(--dark); font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:.88rem; transition:.2s; }
+    .tab.active{ background:var(--primary); color:#fff; border-color:var(--primary); }
+    .tab-panel{ display:none; }
+    .tab-panel.active{ display:block; }
+
+    /* LAYOUT */
+    .admin-layout{ display:grid; grid-template-columns:400px 1fr; gap:2rem; align-items:start; }
+    @media(max-width:900px){ .admin-layout{ grid-template-columns:1fr; } }
+
+    /* CARD */
+    .card{ background:var(--card); border-radius:18px; padding:1.5rem; border:1px solid var(--border); box-shadow:0 4px 20px rgba(0,0,0,.05); }
+    .card-title{ font-family:'Syne',sans-serif; font-size:1rem; color:var(--dark); margin-bottom:1.2rem; padding-bottom:.75rem; border-bottom:2px solid var(--bg); }
+
+    /* FORM */
+    .field{ margin-bottom:1rem; }
+    .field label{ display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:5px; }
+    .field input,.field textarea,.field select{ width:100%; padding:10px 12px; border:1.5px solid var(--border); border-radius:10px; font-size:14px; font-family:'DM Sans',sans-serif; background:#fffaf5; color:var(--dark); outline:none; transition:.2s; }
+    .field input:focus,.field textarea:focus,.field select:focus{ border-color:var(--primary); background:#fff; }
+    .field textarea{ resize:vertical; min-height:65px; }
+    .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .url-preview{ width:100%; margin-top:6px; border-radius:8px; max-height:90px; object-fit:cover; display:none; border:1px solid var(--border); }
+    .url-preview.show{ display:block; }
+
+    /* PHOTO LIST */
+    .photo-list{ display:flex; flex-direction:column; gap:8px; margin-bottom:8px; }
+    .photo-item{ display:flex; align-items:center; gap:8px; background:#fffaf5; border:1.5px solid var(--border); border-radius:10px; padding:8px; }
+    .photo-item img{ width:52px; height:38px; object-fit:cover; border-radius:6px; flex-shrink:0; background:#eee; }
+    .photo-item input{ flex:1; padding:6px 10px; border:1.5px solid var(--border); border-radius:8px; font-size:13px; background:#fff; outline:none; font-family:inherit; }
+    .photo-item input:focus{ border-color:var(--primary); }
+    .photo-rm{ background:none; border:none; color:var(--danger); font-size:20px; cursor:pointer; padding:0 4px; flex-shrink:0; }
+    .add-photo-btn{ width:100%; padding:8px; background:#fff3e0; border:1.5px dashed var(--primary); border-radius:10px; color:var(--primary); font-size:13px; font-weight:700; cursor:pointer; font-family:inherit; transition:.2s; }
+    .add-photo-btn:hover{ background:#ffe0b2; }
+
+    /* ═══ GOA PLACES FIELD ═══ */
+    .places-section{ background:#f8faff; border:1.5px solid #c7d7f5; border-radius:14px; padding:14px; margin-bottom:1rem; }
+    .places-section-title{ font-size:12px; font-weight:700; color:#1d4ed8; text-transform:uppercase; letter-spacing:.5px; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+    .place-card{ background:#fff; border:1.5px solid var(--border); border-radius:12px; padding:10px; margin-bottom:8px; }
+    .place-card-top{ display:flex; gap:10px; align-items:flex-start; }
+    .place-img-preview{ width:70px; height:56px; object-fit:cover; border-radius:8px; flex-shrink:0; background:#f0e6d6; border:1px solid var(--border); }
+    .place-inputs{ flex:1; display:flex; flex-direction:column; gap:6px; }
+    .place-inputs input,.place-inputs textarea{
+      width:100%; padding:7px 10px; border:1.5px solid var(--border);
+      border-radius:8px; font-size:12px; font-family:'DM Sans',sans-serif;
+      background:#fffaf5; outline:none; transition:.2s;
     }
-    .details-modal-bg.open { display: flex; }
-    .details-modal {
-      background: #fff; border-radius: 22px;
-      width: 100%; max-width: 640px;
-      max-height: 90vh; overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-      animation: popIn 0.3s ease;
-    }
-    @keyframes popIn { from { opacity:0; transform:scale(0.93) translateY(20px); } to { opacity:1; transform:scale(1) translateY(0); } }
-    .dm-gallery { position: relative; height: 240px; background: #f0e6d6; border-radius: 22px 22px 0 0; overflow: hidden; }
-    .dm-gallery img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.45s; }
-    .dm-gallery img.active { opacity: 1; }
-    .dm-gal-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 34px; height: 34px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 2; }
-    .dm-gal-prev { left: 12px; } .dm-gal-next { right: 12px; }
-    .dm-gal-dots { position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 5px; }
-    .dm-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.5); transition: all 0.2s; }
-    .dm-dot.active { background: #fff; transform: scale(1.3); }
-    .dm-photo-count { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.5); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 20px; }
-    .dm-close-btn { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.45); border: none; color: #fff; border-radius: 50%; width: 32px; height: 32px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 3; }
-    .dm-no-image { display: flex; align-items: center; justify-content: center; height: 100%; font-size: 4rem; }
-    .dm-body { padding: 1.5rem; }
-    .dm-category { display: inline-block; background: #fff3e0; color: var(--primary); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 10px; border-radius: 20px; margin-bottom: 0.6rem; }
-    .dm-title { font-family: 'Syne', sans-serif; font-size: 1.4rem; color: var(--dark); margin-bottom: 0.75rem; }
-    .dm-info-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
-    .dm-chip { display: flex; align-items: center; gap: 5px; background: var(--bg); border: 1px solid var(--border); padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--dark); }
-    .dm-desc-title { font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 0.4rem; }
-    .dm-description { color: #374151; font-size: 0.93rem; line-height: 1.75; margin-bottom: 1rem; white-space: pre-line; background: #fffaf5; border-radius: 10px; padding: 1rem; border: 1px solid var(--border); }
-    .dm-includes-title { font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 0.5rem; }
-    .dm-includes { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.2rem; }
-    .dm-include-tag { background: #f0fdf4; border: 1px solid #86efac; color: #166534; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 8px; }
-    .dm-price-row { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--border); }
-    .dm-price { font-family: 'Syne', sans-serif; font-size: 2rem; color: var(--primary); font-weight: 800; }
-    .dm-price small { font-size: 0.7rem; color: var(--muted); font-family: 'DM Sans',sans-serif; font-weight: 400; }
-    .btn-view { background: #eff6ff; color: #1d4ed8; border: 1.5px solid #bfdbfe; }
-    .btn-view:hover { background: #dbeafe; }
+    .place-inputs input:focus,.place-inputs textarea:focus{ border-color:var(--primary); background:#fff; }
+    .place-inputs textarea{ resize:vertical; min-height:52px; }
+    .place-rm-btn{ background:none; border:none; color:var(--danger); font-size:18px; cursor:pointer; padding:0; flex-shrink:0; line-height:1; }
+    .add-place-btn{ width:100%; padding:8px; background:#eef4ff; border:1.5px dashed #3b82f6; border-radius:10px; color:#1d4ed8; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; transition:.2s; }
+    .add-place-btn:hover{ background:#dbeafe; }
+
+    /* INFO BOX */
+    .info-box{ background:#f0fdf4; border:1.5px solid #86efac; border-radius:10px; padding:10px 14px; font-size:13px; color:#166534; margin-bottom:12px; line-height:1.5; }
+    .info-box strong{ display:block; margin-bottom:3px; }
+
+    /* BUTTONS */
+    .btn{ display:inline-flex; align-items:center; gap:6px; padding:10px 20px; border:none; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:700; cursor:pointer; transition:.2s; }
+    .btn-full{ width:100%; justify-content:center; }
+    .btn-orange{ background:var(--primary); color:#fff; } .btn-orange:hover{ background:#d4640a; }
+    .btn-green{ background:var(--green); color:#fff; } .btn-green:hover{ background:#059669; }
+    .btn-red{ background:var(--danger); color:#fff; } .btn-red:hover{ background:#dc2626; }
+    .btn-ghost{ background:#f1f5f9; color:var(--dark); } .btn-ghost:hover{ background:#e2e8f0; }
+    .btn-blue{ background:#eff6ff; color:#1d4ed8; border:1.5px solid #bfdbfe; } .btn-blue:hover{ background:#dbeafe; }
+    .btn-sm{ padding:6px 14px; font-size:13px; }
+
+    /* LIST ITEMS */
+    .list-item{ background:var(--card); border-radius:14px; border:1px solid var(--border); overflow:hidden; margin-bottom:12px; animation:fadeUp .3s ease both; }
+    @keyframes fadeUp{ from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+    .list-header{ display:flex; align-items:center; gap:12px; padding:12px 16px; }
+    .list-thumb{ width:64px; height:48px; object-fit:cover; border-radius:8px; flex-shrink:0; background:#f0e6d6; }
+    .list-thumb.round{ border-radius:50%; width:48px; height:48px; }
+    .list-info{ flex:1; min-width:0; }
+    .list-name{ font-weight:700; color:var(--dark); font-size:.95rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .list-meta{ font-size:12px; color:var(--muted); margin-top:2px; }
+    .list-actions{ display:flex; gap:6px; flex-shrink:0; flex-wrap:wrap; justify-content:flex-end; }
+    .edit-panel{ display:none; padding:16px; border-top:1px solid var(--border); background:#fffaf5; }
+    .edit-panel.open{ display:block; }
+
+    /* MODALS */
+    .modal-bg{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:500; justify-content:center; align-items:center; }
+    .modal-bg.open{ display:flex; }
+    .modal{ background:#fff; border-radius:18px; padding:2rem; max-width:340px; width:90%; text-align:center; }
+    .modal h3{ font-family:'Syne',sans-serif; font-size:1.2rem; margin-bottom:.5rem; }
+    .modal p{ color:var(--muted); font-size:14px; margin-bottom:1.5rem; }
+    .modal-btns{ display:flex; gap:10px; }
+    .modal-btns .btn{ flex:1; justify-content:center; }
+
+    /* TOAST */
+    #toast{ position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:#1a1a2e; color:#fff; padding:12px 24px; border-radius:50px; font-size:14px; font-weight:600; z-index:999; transition:.3s; pointer-events:none; }
+    #toast.show{ transform:translateX(-50%) translateY(0); }
+
+    /* DRIVER PAGE GRID */
+    .driver-page-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:1rem; }
+    .driver-page-card{ background:var(--card); border-radius:14px; padding:1rem; border:1px solid var(--border); text-align:center; transition:.2s; }
+    .driver-page-card:hover{ border-color:var(--primary); transform:translateY(-2px); }
+    .driver-page-card.assigned{ border-color:var(--green); background:#f0fdf4; }
+    .driver-page-num{ font-family:'Syne',sans-serif; font-size:1.8rem; color:var(--primary); }
+    .driver-page-name{ font-size:.78rem; color:var(--muted); margin-top:4px; font-weight:600; }
+    .driver-page-link{ display:block; margin-top:8px; font-size:12px; color:var(--primary); font-weight:700; text-decoration:none; }
+
+    /* GALLERY GRID */
+    .gal-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:10px; }
+    .gal-item{ position:relative; border-radius:10px; overflow:hidden; }
+    .gal-item img{ width:100%; height:80px; object-fit:cover; display:block; }
+    .gal-item button{ position:absolute; top:4px; right:4px; background:rgba(239,68,68,.9); color:#fff; border:none; border-radius:6px; padding:2px 7px; cursor:pointer; font-size:14px; }
+
+    /* PLACES COUNT BADGE on list */
+    .places-badge{ display:inline-flex; align-items:center; gap:3px; background:#eef4ff; color:#1d4ed8; font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:6px; }
   </style>
 </head>
 <body>
 
 <div class="topbar">
   <h1>Bhaskar <span>Holidays</span> — Admin</h1>
-  <div class="topbar-links"><a href="index.html" target="_blank">🌐 View Site</a></div>
+  <a href="index.html" target="_blank">🌐 View Site</a>
 </div>
 
 <div class="container">
+
   <div class="tabs">
     <button class="tab active" onclick="switchTab('packages')">🗺️ Packages</button>
     <button class="tab" onclick="switchTab('taxis')">🚕 Taxis & Drivers</button>
-    <button class="tab" onclick="switchTab('gallery')">📷 Main Gallery</button>
+    <button class="tab" onclick="switchTab('gallery')">📷 Gallery</button>
     <button class="tab" onclick="switchTab('drivers')">👨‍✈️ Driver Pages</button>
   </div>
 
-  <!-- PACKAGES -->
+  <!-- ══════════ PACKAGES ══════════ -->
   <div class="tab-panel active" id="tab-packages">
     <div class="admin-layout">
+
+      <!-- ADD FORM -->
       <div class="card">
         <div class="card-title">➕ Add New Package</div>
         <div class="field"><label>Package Name</label><input id="p-name" placeholder="North Goa Sightseeing"></div>
         <div class="field"><label>Category / Badge</label><input id="p-cat" placeholder="🌴 Full Day Tour"></div>
-        <div class="field"><label>Description</label><textarea id="p-desc" placeholder="What's included in this tour..."></textarea></div>
+        <div class="field"><label>Description</label><textarea id="p-desc" placeholder="What's covered in this tour..."></textarea></div>
         <div class="field-row">
           <div class="field"><label>Price (₹/person)</label><input type="number" id="p-price" placeholder="1500"></div>
           <div class="field"><label>Duration</label><input id="p-duration" placeholder="8 Hours"></div>
         </div>
-        <div class="field"><label>Includes (comma separated)</label><input id="p-includes" placeholder="AC Taxi, Driver, Fuel, Sightseeing"></div>
+        <div class="field"><label>Includes (comma separated)</label><input id="p-includes" placeholder="AC Taxi, Driver, Fuel"></div>
         <div class="field">
-          <label>📷 Package Photos — Paste any URL</label>
+          <label>📷 Package Cover Photos</label>
           <div class="photo-list" id="p-photo-list"></div>
           <button class="add-photo-btn" onclick="addPhoto('p-photo-list')">+ Add Photo URL</button>
         </div>
-        <button class="btn btn-orange btn-full" style="margin-top:8px;" onclick="addPackage()">🗺️ Add Package</button>
+
+        <!-- GOA PLACES -->
+        <div class="places-section">
+          <div class="places-section-title">🏖️ Goa Places Covered in this Package</div>
+          <div id="p-places-list"></div>
+          <button class="add-place-btn" onclick="addPlaceItem('p-places-list')">+ Add Goa Place</button>
+        </div>
+
+        <button class="btn btn-orange btn-full" onclick="addPackage()">🗺️ Add Package</button>
       </div>
+
+      <!-- PACKAGE LIST -->
       <div class="card">
         <div class="card-title">📋 All Packages <span id="pkg-count" style="font-size:12px;color:var(--muted);float:right;"></span></div>
         <div id="pkg-list"><p style="text-align:center;color:var(--muted);padding:2rem;">Loading...</p></div>
@@ -171,42 +186,31 @@
     </div>
   </div>
 
-  <!-- TAXIS -->
+  <!-- ══════════ TAXIS ══════════ -->
   <div class="tab-panel" id="tab-taxis">
     <div class="admin-layout">
       <div class="card">
         <div class="card-title">➕ Add Taxi / Driver</div>
-
         <div class="info-box">
           <strong>💬 Dual WhatsApp Booking</strong>
-          When customer books, message goes to BOTH admin (+91 91540 95125) AND this driver's WhatsApp number at the same time.
+          Booking message goes to BOTH admin (+91 91540 95125) AND driver's own WhatsApp simultaneously.
         </div>
-
-        <div class="field"><label>Driver Name</label><input id="t-name" placeholder="e.g. Ramesh Kumar"></div>
+        <div class="field"><label>Driver Name</label><input id="t-name" placeholder="Ramesh Kumar"></div>
         <div class="field">
           <label>Driver WhatsApp Number</label>
           <input id="t-wa" placeholder="919876543210" type="tel">
-          <small style="color:var(--muted);font-size:11px;margin-top:4px;display:block;">Format: 91 + 10 digit number. Example: 919876543210</small>
+          <small style="color:var(--muted);font-size:11px;margin-top:4px;display:block;">Format: 91 + 10 digit number</small>
         </div>
         <div class="field-row">
-          <div class="field">
-            <label>Driver Photo — Paste URL</label>
-            <input id="t-driverimg" placeholder="Paste image URL" oninput="previewImg(this,'prev-dimg')">
-            <img id="prev-dimg" class="url-preview">
-          </div>
-          <div class="field">
-            <label>Taxi Photo — Paste URL</label>
-            <input id="t-taxiimg" placeholder="Paste image URL" oninput="previewImg(this,'prev-timg')">
-            <img id="prev-timg" class="url-preview">
-          </div>
+          <div class="field"><label>Driver Photo URL</label><input id="t-driverimg" placeholder="Paste URL" oninput="previewImg(this,'prev-dimg')"><img id="prev-dimg" class="url-preview"></div>
+          <div class="field"><label>Taxi Photo URL</label><input id="t-taxiimg" placeholder="Paste URL" oninput="previewImg(this,'prev-timg')"><img id="prev-timg" class="url-preview"></div>
         </div>
         <div class="field-row">
           <div class="field"><label>Taxi Number</label><input id="t-num" placeholder="GA-01-AB-1234"></div>
           <div class="field"><label>Capacity (Seats)</label><input type="number" id="t-cap" placeholder="4" min="1" max="50"></div>
         </div>
         <div class="field-row">
-          <div class="field">
-            <label>Car Model / Type</label>
+          <div class="field"><label>Car Model / Type</label>
             <select id="t-type">
               <optgroup label="── Hatchbacks ──">
                 <option>Maruti Alto</option><option>Maruti Alto K10</option><option>Maruti S-Presso</option>
@@ -239,29 +243,27 @@
                 <option>Mini Bus 20 Seater</option><option>Mini Bus 26 Seater</option>
                 <option>Mini Bus 32 Seater</option><option>Bus 40 Seater</option>
               </optgroup>
-              <optgroup label="── Electric Vehicles ──">
+              <optgroup label="── Electric ──">
                 <option>Tata Nexon EV</option><option>Tata Tiago EV</option>
                 <option>MG ZS EV</option><option>Hyundai Kona Electric</option>
               </optgroup>
             </select>
           </div>
-          <div class="field">
-            <label>AC / Non-AC</label>
+          <div class="field"><label>AC / Non-AC</label>
             <select id="t-ac">
               <option value="true">❄️ AC</option>
               <option value="false">🌬️ Non-AC</option>
             </select>
           </div>
         </div>
-        <div class="field"><label>Driver Page Number (1–50)</label><input type="number" id="t-pagenum" placeholder="e.g. 5" min="1" max="50"></div>
+        <div class="field"><label>Driver Page Number (1–50)</label><input type="number" id="t-pagenum" placeholder="5" min="1" max="50"></div>
         <div class="field">
-          <label>📷 Driver Gallery Photos — Paste URLs</label>
+          <label>📷 Driver Gallery Photos</label>
           <div class="photo-list" id="t-photo-list"></div>
-          <button class="add-photo-btn" onclick="addPhoto('t-photo-list')">+ Add Gallery Photo URL</button>
+          <button class="add-photo-btn" onclick="addPhoto('t-photo-list')">+ Add Photo URL</button>
         </div>
         <button class="btn btn-orange btn-full" style="margin-top:8px;" onclick="addTaxi()">🚕 Add Driver</button>
       </div>
-
       <div class="card">
         <div class="card-title">🚕 All Drivers</div>
         <div id="taxi-list"><p style="text-align:center;color:var(--muted);padding:2rem;">Loading...</p></div>
@@ -269,40 +271,37 @@
     </div>
   </div>
 
-  <!-- MAIN GALLERY -->
+  <!-- ══════════ GALLERY ══════════ -->
   <div class="tab-panel" id="tab-gallery">
     <div class="admin-layout">
       <div class="card">
         <div class="card-title">➕ Add to Main Gallery</div>
-        <div class="field">
-          <label>Photo URL — Paste any link</label>
-          <input id="g-url" placeholder="Paste photo URL here" oninput="previewImg(this,'g-prev-img')">
-          <img id="g-prev-img" class="url-preview">
-        </div>
-        <div class="field"><label>Caption (optional)</label><input id="g-caption" placeholder="Beautiful Goa sunset..."></div>
-        <button class="btn btn-orange btn-full" onclick="addGalleryPhoto()">📷 Add to Gallery</button>
+        <div class="field"><label>Photo URL</label><input id="g-url" placeholder="Paste photo URL" oninput="previewImg(this,'g-prev-img')"><img id="g-prev-img" class="url-preview"></div>
+        <div class="field"><label>Caption (optional)</label><input id="g-caption" placeholder="Goa sunset..."></div>
+        <button class="btn btn-orange btn-full" onclick="addGalleryPhoto()">📷 Add Photo</button>
       </div>
       <div class="card">
-        <div class="card-title">🖼️ All Gallery Photos</div>
+        <div class="card-title">🖼️ Gallery Photos</div>
         <div class="gal-grid" id="gallery-list"></div>
       </div>
     </div>
   </div>
 
-  <!-- DRIVER PAGES -->
+  <!-- ══════════ DRIVER PAGES ══════════ -->
   <div class="tab-panel" id="tab-drivers">
     <div class="card">
       <div class="card-title">👨‍✈️ Driver Pages (1–50)</div>
-      <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem;">🟢 Green = Assigned driver. Share link <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">driver.html?id=1</code> with each driver.</p>
+      <p style="color:var(--muted);font-size:.88rem;margin-bottom:1.5rem;">🟢 Green = Assigned. Share: <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">driver.html?id=1</code></p>
       <div class="driver-page-grid" id="driver-pages-grid"></div>
     </div>
   </div>
-</div>
 
+</div><!-- /container -->
+
+<!-- DELETE MODAL -->
 <div class="modal-bg" id="del-modal">
   <div class="modal">
-    <h3>🗑️ Delete?</h3>
-    <p>This cannot be undone.</p>
+    <h3>🗑️ Delete?</h3><p>This cannot be undone.</p>
     <div class="modal-btns">
       <button class="btn btn-ghost" onclick="closeDelModal()">Cancel</button>
       <button class="btn btn-red" onclick="confirmDel()">Delete</button>
@@ -310,364 +309,280 @@
   </div>
 </div>
 
-<!-- VIEW DETAILS POPUP -->
-<div class="details-modal-bg" id="details-modal-bg">
-  <div class="details-modal">
-    <div class="dm-gallery" id="dm-gallery">
-      <button class="dm-close-btn" onclick="closeDetails()">✕</button>
-      <div id="dm-images"></div>
-      <button class="dm-gal-btn dm-gal-prev" id="dm-prev" onclick="dmNav(-1)" style="display:none">‹</button>
-      <button class="dm-gal-btn dm-gal-next" id="dm-next" onclick="dmNav(1)" style="display:none">›</button>
-      <div class="dm-gal-dots" id="dm-dots"></div>
-      <div class="dm-photo-count" id="dm-photo-count"></div>
-    </div>
-    <div class="dm-body">
-      <div class="dm-category" id="dm-category"></div>
-      <div class="dm-title" id="dm-title"></div>
-      <div class="dm-info-row" id="dm-info-row"></div>
-      <div class="dm-desc-title">📋 Description</div>
-      <div class="dm-description" id="dm-description"></div>
-      <div class="dm-includes-title">✅ What's Included</div>
-      <div class="dm-includes" id="dm-includes"></div>
-      <div class="dm-price-row">
-        <div class="dm-price" id="dm-price"></div>
-        <button class="btn btn-ghost" onclick="closeDetails()">✕ Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div id="toast"></div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-  import { getDatabase, ref, push, update, remove, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getDatabase, ref, push, update, remove, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyB0_DZfEQc_uQF2Dx8WmUt4WkJ0sY8Jai4",
-    authDomain: "bhaskar-holidays.firebaseapp.com",
-    databaseURL: "https://bhaskar-holidays-default-rtdb.firebaseio.com",
-    projectId: "bhaskar-holidays",
-    storageBucket: "bhaskar-holidays.firebasestorage.app",
-    messagingSenderId: "1092104643884",
-    appId: "1:1092104643884:web:42bf618858028b51b3b889"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyB0_DZfEQc_uQF2Dx8WmUt4WkJ0sY8Jai4",
+  authDomain: "bhaskar-holidays.firebaseapp.com",
+  databaseURL: "https://bhaskar-holidays-default-rtdb.firebaseio.com",
+  projectId: "bhaskar-holidays",
+  storageBucket: "bhaskar-holidays.firebasestorage.app",
+  messagingSenderId: "1092104643884",
+  appId: "1:1092104643884:web:42bf618858028b51b3b889"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const ADMIN_WA = '919154095125';
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const ADMIN_WA = '919154095125';
+// ── HELPERS ──
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800); }
+window.switchTab = name => {
+  const names=['packages','taxis','gallery','drivers'];
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',names[i]===name));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+};
+window.previewImg = (inp,id) => {
+  const img=document.getElementById(id); if(!img) return;
+  const u=inp.value.trim();
+  if(u){ img.src=u; img.classList.add('show'); img.onerror=()=>img.classList.remove('show'); }
+  else img.classList.remove('show');
+};
 
-  const CAR_TYPES = [
-    'Maruti Alto','Maruti Alto K10','Maruti S-Presso','Maruti Celerio','Maruti Wagon R','Maruti Swift','Maruti Baleno',
-    'Hyundai Grand i10','Hyundai i20','Tata Tiago','Tata Altroz','Renault Kwid',
-    'Maruti Dzire','Honda Amaze','Honda City','Hyundai Aura','Hyundai Verna','Tata Tigor','Skoda Slavia','Volkswagen Virtus',
-    'Maruti Brezza','Maruti Ertiga','Maruti XL6','Hyundai Creta','Hyundai Venue','Hyundai Alcazar',
-    'Kia Seltos','Kia Sonet','Kia Carens','Tata Nexon','Tata Harrier','Tata Safari',
-    'Mahindra Scorpio','Mahindra Scorpio-N','Mahindra Bolero','Mahindra XUV300','Mahindra XUV700','Mahindra Thar',
-    'Renault Duster','MG Hector','MG Astor',
-    'Toyota Innova','Toyota Innova Crysta','Toyota Innova HyCross','Toyota Fortuner',
-    'Maruti Suzuki Eeco','Mahindra Marazzo',
-    'Tempo Traveller 9 Seater','Tempo Traveller 12 Seater','Tempo Traveller 14 Seater','Tempo Traveller 17 Seater',
-    'Mini Bus 20 Seater','Mini Bus 26 Seater','Mini Bus 32 Seater','Bus 40 Seater',
-    'Tata Nexon EV','Tata Tiago EV','MG ZS EV','Hyundai Kona Electric'
-  ];
+// ── PHOTO FIELD ──
+window.addPhoto = (listId, val='') => {
+  const list=document.getElementById(listId); if(!list) return;
+  const item=document.createElement('div'); item.className='photo-item';
+  const img=document.createElement('img'); img.src=val;
+  const inp=document.createElement('input'); inp.type='text'; inp.placeholder='Paste photo URL'; inp.value=val;
+  inp.oninput=()=>{ img.src=inp.value.trim(); img.onerror=()=>img.src=''; };
+  const rm=document.createElement('button'); rm.className='photo-rm'; rm.innerHTML='×'; rm.onclick=()=>item.remove();
+  item.append(img,inp,rm); list.appendChild(item);
+};
+function getPhotos(listId){
+  const p={}; let i=0;
+  document.querySelectorAll(`#${listId} .photo-item input[type=text]`).forEach(inp=>{ if(inp.value.trim()) p[`p${i++}`]=inp.value.trim(); });
+  return p;
+}
 
-  function toast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg; t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2800);
-  }
+// ── GOA PLACE FIELD ──
+window.addPlaceItem = (listId, place={}) => {
+  const list=document.getElementById(listId); if(!list) return;
+  const card=document.createElement('div'); card.className='place-card';
+  const imgEl=document.createElement('img'); imgEl.className='place-img-preview'; imgEl.src=place.image||'';
+  const inputs=document.createElement('div'); inputs.className='place-inputs';
 
-  window.switchTab = (name) => {
-    const names = ['packages','taxis','gallery','drivers'];
-    document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', names[i] === name));
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('tab-' + name).classList.add('active');
-  };
+  const nameInp=document.createElement('input'); nameInp.placeholder='Place name (e.g. Baga Beach)'; nameInp.value=place.name||''; nameInp.dataset.field='name';
+  const imgInp=document.createElement('input'); imgInp.placeholder='Place image URL'; imgInp.value=place.image||''; imgInp.dataset.field='image';
+  imgInp.oninput=()=>{ imgEl.src=imgInp.value.trim(); imgEl.onerror=()=>imgEl.src=''; };
+  const descTa=document.createElement('textarea'); descTa.placeholder='Short description of this place...'; descTa.value=place.desc||''; descTa.dataset.field='desc';
 
-  window.previewImg = (input, previewId) => {
-    const img = document.getElementById(previewId);
-    if (!img) return;
-    const url = input.value.trim();
-    if (url) { img.src = url; img.classList.add('show'); img.onerror = () => img.classList.remove('show'); }
-    else img.classList.remove('show');
-  };
+  inputs.append(nameInp,imgInp,descTa);
+  const rmBtn=document.createElement('button'); rmBtn.className='place-rm-btn'; rmBtn.innerHTML='×'; rmBtn.onclick=()=>card.remove();
+  const top=document.createElement('div'); top.className='place-card-top';
+  top.append(imgEl,inputs,rmBtn);
+  card.appendChild(top);
+  list.appendChild(card);
+};
+function getPlaces(listId){
+  const places={}; let i=0;
+  document.querySelectorAll(`#${listId} .place-card`).forEach(card=>{
+    const name=card.querySelector('[data-field=name]')?.value?.trim();
+    const image=card.querySelector('[data-field=image]')?.value?.trim();
+    const desc=card.querySelector('[data-field=desc]')?.value?.trim();
+    if(name) places[`pl${i++}`]={name, image:image||'', desc:desc||''};
+  });
+  return places;
+}
 
-  window.addPhoto = (listId, val = '') => {
-    const list = document.getElementById(listId);
-    if (!list) return;
-    const item = document.createElement('div');
-    item.className = 'photo-item';
-    const img = document.createElement('img'); img.src = val;
-    const inp = document.createElement('input'); inp.type = 'text'; inp.placeholder = 'Paste photo URL'; inp.value = val;
-    inp.oninput = () => { img.src = inp.value.trim(); img.onerror = () => img.src = ''; };
-    const rm = document.createElement('button'); rm.className = 'photo-rm'; rm.innerHTML = '×'; rm.onclick = () => item.remove();
-    item.append(img, inp, rm); list.appendChild(item);
-  };
+function v(id){ return document.getElementById(id)?.value?.trim()||''; }
+function clr(...ids){ ids.forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; }); }
 
-  function getPhotos(listId) {
-    const photos = {}; let i = 0;
-    document.querySelectorAll(`#${listId} input[type=text]`).forEach(inp => { if (inp.value.trim()) photos[`p${i++}`] = inp.value.trim(); });
-    return photos;
-  }
+// ══ PACKAGES ══
+window.addPackage = async () => {
+  const name=v('p-name'); if(!name) return toast('⚠️ Package name required.');
+  const photos=getPhotos('p-photo-list');
+  const places=getPlaces('p-places-list');
+  await push(ref(db,'packages'),{ name, category:v('p-cat'), description:v('p-desc'), price:v('p-price'), duration:v('p-duration'), includes:v('p-includes'), photos, image:Object.values(photos)[0]||'', places });
+  clr('p-name','p-cat','p-desc','p-price','p-duration','p-includes');
+  document.getElementById('p-photo-list').innerHTML='';
+  document.getElementById('p-places-list').innerHTML='';
+  toast('✅ Package added!');
+};
 
-  function v(id) { return document.getElementById(id)?.value?.trim() || ''; }
-  function clr(...ids) { ids.forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = ''; }); }
+let delPath=null;
+window.openDel = path => { delPath=path; document.getElementById('del-modal').classList.add('open'); };
+window.closeDelModal = () => { delPath=null; document.getElementById('del-modal').classList.remove('open'); };
+window.confirmDel = async () => { if(!delPath) return; await remove(ref(db,delPath)); closeDelModal(); toast('🗑️ Deleted.'); };
 
-  // ── PACKAGES ──
-  window.addPackage = async () => {
-    const name = v('p-name'); if (!name) return toast('⚠️ Package name required.');
-    const photos = getPhotos('p-photo-list');
-    await push(ref(db, 'packages'), { name, category: v('p-cat'), description: v('p-desc'), price: v('p-price'), duration: v('p-duration'), includes: v('p-includes'), photos, image: Object.values(photos)[0] || '' });
-    clr('p-name','p-cat','p-desc','p-price','p-duration','p-includes');
-    document.getElementById('p-photo-list').innerHTML = '';
-    toast('✅ Package added!');
-  };
+window.toggleEdit = id => document.getElementById('ep-'+id)?.classList.toggle('open');
 
-  let delPath = null;
-  window.openDel = (path) => { delPath = path; document.getElementById('del-modal').classList.add('open'); };
-  window.closeDelModal = () => { delPath = null; document.getElementById('del-modal').classList.remove('open'); };
-  window.confirmDel = async () => { if (!delPath) return; await remove(ref(db, delPath)); closeDelModal(); toast('🗑️ Deleted.'); };
+window.savePkg = async id => {
+  const photos=getPhotos('pp-list-'+id);
+  const places=getPlaces('pl-list-'+id);
+  await update(ref(db,'packages/'+id),{ name:v('pe-name-'+id), category:v('pe-cat-'+id), description:v('pe-desc-'+id), price:v('pe-price-'+id), duration:v('pe-dur-'+id), includes:v('pe-inc-'+id), photos, image:Object.values(photos)[0]||'', places });
+  document.getElementById('ep-'+id).classList.remove('open');
+  toast('✅ Package updated!');
+};
 
-  window.toggleEdit = (id) => document.getElementById('ep-' + id)?.classList.toggle('open');
-  window.savePkg = async (id) => {
-    const photos = getPhotos('pp-list-' + id);
-    await update(ref(db, 'packages/' + id), { name: v('pe-name-' + id), category: v('pe-cat-' + id), description: v('pe-desc-' + id), price: v('pe-price-' + id), duration: v('pe-dur-' + id), includes: v('pe-inc-' + id), photos, image: Object.values(photos)[0] || '' });
-    document.getElementById('ep-' + id).classList.remove('open'); toast('✅ Updated!');
-  };
-
-  onValue(ref(db, 'packages'), (snap) => {
-    const list = document.getElementById('pkg-list');
-    const data = snap.val();
-    if (!data) { list.innerHTML = '<p style="text-align:center;color:var(--muted);padding:2rem;">No packages yet.</p>'; document.getElementById('pkg-count').textContent = ''; return; }
-    const keys = Object.keys(data);
-    document.getElementById('pkg-count').textContent = keys.length + ' packages';
-    list.innerHTML = '';
-    keys.forEach((id, i) => {
-      const p = data[id];
-      const photos = p.photos ? Object.values(p.photos) : (p.image ? [p.image] : []);
-      const thumb = photos[0] || '';
-      const el = document.createElement('div'); el.className = 'list-item'; el.style.animationDelay = i * 50 + 'ms';
-      el.innerHTML = `
-        <div class="list-header">
-          <img class="list-thumb" src="${thumb}" alt="" onerror="this.style.background='#f0e6d6'">
-          <div class="list-info">
-            <div class="list-name">${p.name}</div>
-            <div class="list-meta">₹${p.price||0}/person • ${p.duration||''} • ${photos.length} photo(s)</div>
-          </div>
-          <div class="list-actions">
-            <button class="btn btn-view btn-sm" onclick='openDetails(${JSON.stringify(p)})'>👁️ View</button>
-            <button class="btn btn-ghost btn-sm" onclick="toggleEdit('${id}')">✏️</button>
-            <button class="btn btn-red btn-sm" onclick="openDel('packages/${id}')">🗑️</button>
-          </div>
+onValue(ref(db,'packages'), snap => {
+  const list=document.getElementById('pkg-list');
+  const data=snap.val();
+  if(!data){ list.innerHTML='<p style="text-align:center;color:var(--muted);padding:2rem;">No packages yet.</p>'; document.getElementById('pkg-count').textContent=''; return; }
+  const keys=Object.keys(data);
+  document.getElementById('pkg-count').textContent=keys.length+' packages';
+  list.innerHTML='';
+  keys.forEach((id,i)=>{
+    const p=data[id];
+    const photos=p.photos?Object.values(p.photos):(p.image?[p.image]:[]);
+    const placesArr=p.places?Object.values(p.places):[];
+    const thumb=photos[0]||'';
+    const el=document.createElement('div'); el.className='list-item'; el.style.animationDelay=i*50+'ms';
+    el.innerHTML=`
+      <div class="list-header">
+        <img class="list-thumb" src="${thumb}" alt="" onerror="this.style.background='#f0e6d6'">
+        <div class="list-info">
+          <div class="list-name">${p.name}${placesArr.length>0?`<span class="places-badge">🏖️ ${placesArr.length} places</span>`:''}</div>
+          <div class="list-meta">₹${p.price||0}/person • ${p.duration||''} • ${photos.length} photo(s)</div>
         </div>
-        <div class="edit-panel" id="ep-${id}">
-          <div class="field-row">
-            <div class="field"><label>Name</label><input id="pe-name-${id}" value="${p.name||''}"></div>
-            <div class="field"><label>Category</label><input id="pe-cat-${id}" value="${p.category||''}"></div>
-          </div>
-          <div class="field"><label>Description</label><textarea id="pe-desc-${id}">${p.description||''}</textarea></div>
-          <div class="field-row">
-            <div class="field"><label>Price ₹</label><input type="number" id="pe-price-${id}" value="${p.price||''}"></div>
-            <div class="field"><label>Duration</label><input id="pe-dur-${id}" value="${p.duration||''}"></div>
-          </div>
-          <div class="field"><label>Includes</label><input id="pe-inc-${id}" value="${p.includes||''}"></div>
-          <div class="field"><label>Photos</label><div class="photo-list" id="pp-list-${id}"></div><button class="add-photo-btn" onclick="addPhoto('pp-list-${id}')">+ Add Photo</button></div>
-          <div style="display:flex;gap:8px;margin-top:12px;">
-            <button class="btn btn-green btn-sm" onclick="savePkg('${id}')">💾 Save</button>
-            <button class="btn btn-ghost btn-sm" onclick="toggleEdit('${id}')">Cancel</button>
-          </div>
-        </div>`;
-      list.appendChild(el);
-      photos.forEach(u => addPhoto('pp-list-' + id, u));
-    });
-  });
-
-  // ── TAXIS ──
-  window.addTaxi = async () => {
-    const name = v('t-name'); if (!name) return toast('⚠️ Driver name required.');
-    const driverWa = v('t-wa') || ADMIN_WA;
-    const photos = getPhotos('t-photo-list');
-    await push(ref(db, 'taxis'), { driverName: name, whatsapp: driverWa, driverImage: v('t-driverimg'), taxiImage: v('t-taxiimg'), taxiNumber: v('t-num'), capacity: v('t-cap') || '4', type: v('t-type') || 'Toyota Innova', ac: document.getElementById('t-ac').value === 'true', pageNumber: parseInt(v('t-pagenum')) || null, gallery: photos });
-    clr('t-name','t-wa','t-driverimg','t-taxiimg','t-num','t-cap','t-pagenum');
-    document.getElementById('t-photo-list').innerHTML = '';
-    ['prev-dimg','prev-timg'].forEach(id => document.getElementById(id).classList.remove('show'));
-    toast('✅ Driver added!');
-  };
-
-  window.toggleTaxiEdit = (id) => document.getElementById('tet-' + id)?.classList.toggle('open');
-  window.saveTaxi = async (id) => {
-    const photos = getPhotos('tg-list-' + id);
-    await update(ref(db, 'taxis/' + id), { driverName: v('te-name-'+id), whatsapp: v('te-wa-'+id), driverImage: v('te-dimg-'+id), taxiImage: v('te-timg-'+id), taxiNumber: v('te-num-'+id), capacity: v('te-cap-'+id), type: v('te-type-'+id), ac: document.getElementById('te-ac-'+id)?.value === 'true', pageNumber: parseInt(v('te-page-'+id)) || null, gallery: photos });
-    document.getElementById('tet-' + id).classList.remove('open'); toast('✅ Driver updated!');
-  };
-
-  onValue(ref(db, 'taxis'), (snap) => {
-    const list = document.getElementById('taxi-list');
-    const data = snap.val();
-    if (!data) { list.innerHTML = '<p style="text-align:center;color:var(--muted);padding:2rem;">No drivers yet.</p>'; return; }
-    list.innerHTML = '';
-    Object.entries(data).forEach(([id, t], i) => {
-      const galleryPhotos = t.gallery ? Object.values(t.gallery) : [];
-      const typeOptions = CAR_TYPES.map(c => `<option ${c===t.type?'selected':''}>${c}</option>`).join('');
-      const el = document.createElement('div'); el.className = 'list-item'; el.style.animationDelay = i*50+'ms';
-      el.innerHTML = `
-        <div class="list-header">
-          <img class="list-thumb round" src="${t.driverImage||''}" alt="" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(t.driverName||'D')}&background=e8730a&color=fff'">
-          <div class="list-info">
-            <div class="list-name">${t.driverName}</div>
-            <div class="list-meta">${t.type||''} • ${t.capacity||4} seats • 📷 ${galleryPhotos.length} gallery photos${t.pageNumber?' • Page #'+t.pageNumber:''}</div>
-          </div>
-          <div class="list-actions">
-            <button class="btn btn-ghost btn-sm" onclick="toggleTaxiEdit('${id}')">✏️</button>
-            <button class="btn btn-red btn-sm" onclick="openDel('taxis/${id}')">🗑️</button>
-          </div>
+        <div class="list-actions">
+          <button class="btn btn-blue btn-sm" onclick="toggleEdit('${id}')">✏️ Edit</button>
+          <button class="btn btn-red btn-sm" onclick="openDel('packages/${id}')">🗑️</button>
         </div>
-        <div class="edit-panel" id="tet-${id}">
-          <div class="field-row">
-            <div class="field"><label>Driver Name</label><input id="te-name-${id}" value="${t.driverName||''}"></div>
-            <div class="field"><label>WhatsApp Number</label><input id="te-wa-${id}" value="${t.whatsapp||''}" placeholder="919876543210"></div>
-          </div>
-          <div class="field-row">
-            <div class="field"><label>Driver Photo URL</label><input id="te-dimg-${id}" value="${t.driverImage||''}" placeholder="Paste URL"></div>
-            <div class="field"><label>Taxi Photo URL</label><input id="te-timg-${id}" value="${t.taxiImage||''}" placeholder="Paste URL"></div>
-          </div>
-          <div class="field-row">
-            <div class="field"><label>Taxi Number</label><input id="te-num-${id}" value="${t.taxiNumber||''}"></div>
-            <div class="field"><label>Capacity</label><input type="number" id="te-cap-${id}" value="${t.capacity||4}"></div>
-          </div>
-          <div class="field-row">
-            <div class="field"><label>Car Model</label><select id="te-type-${id}">${typeOptions}</select></div>
-            <div class="field"><label>AC</label><select id="te-ac-${id}"><option value="true" ${t.ac?'selected':''}>❄️ AC</option><option value="false" ${!t.ac?'selected':''}>🌬️ Non-AC</option></select></div>
-          </div>
-          <div class="field"><label>Page # (1-50)</label><input type="number" id="te-page-${id}" value="${t.pageNumber||''}"></div>
-          <div class="field"><label>📷 Driver Gallery Photos</label><div class="photo-list" id="tg-list-${id}"></div><button class="add-photo-btn" onclick="addPhoto('tg-list-${id}')">+ Add Photo URL</button></div>
-          <div style="display:flex;gap:8px;margin-top:12px;">
-            <button class="btn btn-green btn-sm" onclick="saveTaxi('${id}')">💾 Save</button>
-            <button class="btn btn-ghost btn-sm" onclick="toggleTaxiEdit('${id}')">Cancel</button>
-          </div>
-        </div>`;
-      list.appendChild(el);
-      galleryPhotos.forEach(u => addPhoto('tg-list-' + id, u));
-    });
+      </div>
+      <div class="edit-panel" id="ep-${id}">
+        <div style="font-family:'Syne',sans-serif;font-size:.95rem;color:var(--dark);margin-bottom:1rem;font-weight:700;">✏️ Edit Package</div>
+        <div class="field-row">
+          <div class="field"><label>Name</label><input id="pe-name-${id}" value="${(p.name||'').replace(/"/g,'&quot;')}"></div>
+          <div class="field"><label>Category</label><input id="pe-cat-${id}" value="${(p.category||'').replace(/"/g,'&quot;')}"></div>
+        </div>
+        <div class="field"><label>Description</label><textarea id="pe-desc-${id}">${p.description||''}</textarea></div>
+        <div class="field-row">
+          <div class="field"><label>Price ₹</label><input type="number" id="pe-price-${id}" value="${p.price||''}"></div>
+          <div class="field"><label>Duration</label><input id="pe-dur-${id}" value="${(p.duration||'').replace(/"/g,'&quot;')}"></div>
+        </div>
+        <div class="field"><label>Includes</label><input id="pe-inc-${id}" value="${(p.includes||'').replace(/"/g,'&quot;')}"></div>
+        <div class="field">
+          <label>📷 Cover Photos</label>
+          <div class="photo-list" id="pp-list-${id}"></div>
+          <button class="add-photo-btn" onclick="addPhoto('pp-list-${id}')">+ Add Photo URL</button>
+        </div>
+        <div class="places-section" style="margin-top:4px;">
+          <div class="places-section-title">🏖️ Goa Places — Add / Edit / Delete</div>
+          <div id="pl-list-${id}"></div>
+          <button class="add-place-btn" onclick="addPlaceItem('pl-list-${id}')">+ Add Goa Place</button>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px;">
+          <button class="btn btn-green btn-sm" onclick="savePkg('${id}')">💾 Save Changes</button>
+          <button class="btn btn-ghost btn-sm" onclick="toggleEdit('${id}')">Cancel</button>
+        </div>
+      </div>`;
+    list.appendChild(el);
+    // populate existing photos
+    photos.forEach(u=>addPhoto('pp-list-'+id,u));
+    // populate existing places
+    placesArr.forEach(pl=>addPlaceItem('pl-list-'+id,pl));
   });
+});
 
-  // ── GALLERY ──
-  window.addGalleryPhoto = async () => {
-    const url = v('g-url'); if (!url) return toast('⚠️ Please paste a photo URL.');
-    await push(ref(db, 'gallery'), { url, caption: v('g-caption') });
-    clr('g-url','g-caption'); document.getElementById('g-prev-img').classList.remove('show');
-    toast('✅ Photo added!');
-  };
+// ══ TAXIS ══
+const CAR_TYPES=['Maruti Alto','Maruti Alto K10','Maruti S-Presso','Maruti Celerio','Maruti Wagon R','Maruti Swift','Maruti Baleno','Hyundai Grand i10','Hyundai i20','Tata Tiago','Tata Altroz','Renault Kwid','Maruti Dzire','Honda Amaze','Honda City','Hyundai Aura','Hyundai Verna','Tata Tigor','Skoda Slavia','Volkswagen Virtus','Maruti Brezza','Maruti Ertiga','Maruti XL6','Hyundai Creta','Hyundai Venue','Hyundai Alcazar','Kia Seltos','Kia Sonet','Kia Carens','Tata Nexon','Tata Harrier','Tata Safari','Mahindra Scorpio','Mahindra Scorpio-N','Mahindra Bolero','Mahindra XUV300','Mahindra XUV700','Mahindra Thar','Renault Duster','MG Hector','MG Astor','Toyota Innova','Toyota Innova Crysta','Toyota Innova HyCross','Toyota Fortuner','Maruti Suzuki Eeco','Mahindra Marazzo','Tempo Traveller 9 Seater','Tempo Traveller 12 Seater','Tempo Traveller 14 Seater','Tempo Traveller 17 Seater','Mini Bus 20 Seater','Mini Bus 26 Seater','Mini Bus 32 Seater','Bus 40 Seater','Tata Nexon EV','Tata Tiago EV','MG ZS EV','Hyundai Kona Electric'];
 
-  onValue(ref(db, 'gallery'), (snap) => {
-    const list = document.getElementById('gallery-list');
-    const data = snap.val();
-    if (!data) { list.innerHTML = '<p style="color:var(--muted);grid-column:1/-1;text-align:center;padding:2rem;">No photos yet.</p>'; return; }
-    list.innerHTML = '';
-    Object.entries(data).forEach(([id, g]) => {
-      const url = g.url || g;
-      const wrap = document.createElement('div'); wrap.className = 'gal-item';
-      wrap.innerHTML = `<img src="${url}" alt="" onerror="this.style.background='#f0e6d6'"><button onclick="openDel('gallery/${id}')">×</button>`;
-      list.appendChild(wrap);
-    });
+window.addTaxi = async () => {
+  const name=v('t-name'); if(!name) return toast('⚠️ Driver name required.');
+  const photos=getPhotos('t-photo-list');
+  await push(ref(db,'taxis'),{ driverName:name, whatsapp:v('t-wa')||ADMIN_WA, driverImage:v('t-driverimg'), taxiImage:v('t-taxiimg'), taxiNumber:v('t-num'), capacity:v('t-cap')||'4', type:v('t-type')||'Toyota Innova', ac:document.getElementById('t-ac').value==='true', pageNumber:parseInt(v('t-pagenum'))||null, gallery:photos });
+  clr('t-name','t-wa','t-driverimg','t-taxiimg','t-num','t-cap','t-pagenum');
+  document.getElementById('t-photo-list').innerHTML='';
+  ['prev-dimg','prev-timg'].forEach(id=>document.getElementById(id).classList.remove('show'));
+  toast('✅ Driver added!');
+};
+window.toggleTaxiEdit = id => document.getElementById('tet-'+id)?.classList.toggle('open');
+window.saveTaxi = async id => {
+  const photos=getPhotos('tg-list-'+id);
+  await update(ref(db,'taxis/'+id),{ driverName:v('te-name-'+id), whatsapp:v('te-wa-'+id), driverImage:v('te-dimg-'+id), taxiImage:v('te-timg-'+id), taxiNumber:v('te-num-'+id), capacity:v('te-cap-'+id), type:v('te-type-'+id), ac:document.getElementById('te-ac-'+id)?.value==='true', pageNumber:parseInt(v('te-page-'+id))||null, gallery:photos });
+  document.getElementById('tet-'+id).classList.remove('open'); toast('✅ Driver updated!');
+};
+
+onValue(ref(db,'taxis'), snap => {
+  const list=document.getElementById('taxi-list');
+  const data=snap.val();
+  if(!data){ list.innerHTML='<p style="text-align:center;color:var(--muted);padding:2rem;">No drivers yet.</p>'; return; }
+  list.innerHTML='';
+  Object.entries(data).forEach(([id,t],i)=>{
+    const galPhotos=t.gallery?Object.values(t.gallery):[];
+    const typeOpts=CAR_TYPES.map(c=>`<option ${c===t.type?'selected':''}>${c}</option>`).join('');
+    const el=document.createElement('div'); el.className='list-item'; el.style.animationDelay=i*50+'ms';
+    el.innerHTML=`
+      <div class="list-header">
+        <img class="list-thumb round" src="${t.driverImage||''}" alt="" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(t.driverName||'D')}&background=e8730a&color=fff'">
+        <div class="list-info">
+          <div class="list-name">${t.driverName}</div>
+          <div class="list-meta">${t.type||''} • ${t.capacity||4} seats • 📷 ${galPhotos.length} photos${t.pageNumber?' • Page #'+t.pageNumber:''}</div>
+        </div>
+        <div class="list-actions">
+          <button class="btn btn-blue btn-sm" onclick="toggleTaxiEdit('${id}')">✏️ Edit</button>
+          <button class="btn btn-red btn-sm" onclick="openDel('taxis/${id}')">🗑️</button>
+        </div>
+      </div>
+      <div class="edit-panel" id="tet-${id}">
+        <div class="field-row">
+          <div class="field"><label>Driver Name</label><input id="te-name-${id}" value="${(t.driverName||'').replace(/"/g,'&quot;')}"></div>
+          <div class="field"><label>WhatsApp No.</label><input id="te-wa-${id}" value="${t.whatsapp||''}" placeholder="919876543210"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Driver Photo URL</label><input id="te-dimg-${id}" value="${t.driverImage||''}" placeholder="Paste URL"></div>
+          <div class="field"><label>Taxi Photo URL</label><input id="te-timg-${id}" value="${t.taxiImage||''}" placeholder="Paste URL"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Taxi Number</label><input id="te-num-${id}" value="${t.taxiNumber||''}"></div>
+          <div class="field"><label>Capacity</label><input type="number" id="te-cap-${id}" value="${t.capacity||4}"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Car Model</label><select id="te-type-${id}">${typeOpts}</select></div>
+          <div class="field"><label>AC</label><select id="te-ac-${id}"><option value="true" ${t.ac?'selected':''}>❄️ AC</option><option value="false" ${!t.ac?'selected':''}>🌬️ Non-AC</option></select></div>
+        </div>
+        <div class="field"><label>Page # (1-50)</label><input type="number" id="te-page-${id}" value="${t.pageNumber||''}"></div>
+        <div class="field"><label>📷 Gallery Photos</label><div class="photo-list" id="tg-list-${id}"></div><button class="add-photo-btn" onclick="addPhoto('tg-list-${id}')">+ Add Photo URL</button></div>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          <button class="btn btn-green btn-sm" onclick="saveTaxi('${id}')">💾 Save</button>
+          <button class="btn btn-ghost btn-sm" onclick="toggleTaxiEdit('${id}')">Cancel</button>
+        </div>
+      </div>`;
+    list.appendChild(el);
+    galPhotos.forEach(u=>addPhoto('tg-list-'+id,u));
   });
+});
 
-  // ── DRIVER PAGES ──
-  onValue(ref(db, 'taxis'), (snap) => {
-    const drivers = snap.val() || {};
-    const pageMap = {};
-    Object.values(drivers).forEach(d => { if(d.pageNumber) pageMap[d.pageNumber] = d.driverName; });
-    const grid = document.getElementById('driver-pages-grid');
-    grid.innerHTML = '';
-    for (let i = 1; i <= 50; i++) {
-      const assigned = !!pageMap[i];
-      const card = document.createElement('div');
-      card.className = 'driver-page-card' + (assigned ? ' assigned' : '');
-      card.innerHTML = `<div class="driver-page-num">#${i}</div><div class="driver-page-name">${pageMap[i] || 'Unassigned'}</div><a class="driver-page-link" href="driver.html?id=${i}" target="_blank">Open Page →</a>`;
-      grid.appendChild(card);
-    }
+// ══ GALLERY ══
+window.addGalleryPhoto = async () => {
+  const url=v('g-url'); if(!url) return toast('⚠️ Please paste a photo URL.');
+  await push(ref(db,'gallery'),{ url, caption:v('g-caption') });
+  clr('g-url','g-caption'); document.getElementById('g-prev-img').classList.remove('show');
+  toast('✅ Photo added!');
+};
+onValue(ref(db,'gallery'), snap => {
+  const list=document.getElementById('gallery-list');
+  const data=snap.val();
+  if(!data){ list.innerHTML='<p style="color:var(--muted);grid-column:1/-1;text-align:center;padding:2rem;">No photos yet.</p>'; return; }
+  list.innerHTML='';
+  Object.entries(data).forEach(([id,g])=>{
+    const url=g.url||g;
+    const wrap=document.createElement('div'); wrap.className='gal-item';
+    wrap.innerHTML=`<img src="${url}" alt="" onerror="this.style.background='#f0e6d6'"><button onclick="openDel('gallery/${id}')">×</button>`;
+    list.appendChild(wrap);
   });
+});
 
-  // ── VIEW DETAILS POPUP ──
-  let dmPhotos = [], dmIdx = 0;
-
-  window.openDetails = (pkg) => {
-    dmPhotos = pkg.photos ? Object.values(pkg.photos) : (pkg.image ? [pkg.image] : []);
-    dmIdx = 0;
-
-    // Gallery
-    const imagesEl = document.getElementById('dm-images');
-    const dotsEl = document.getElementById('dm-dots');
-    const prevBtn = document.getElementById('dm-prev');
-    const nextBtn = document.getElementById('dm-next');
-    const countEl = document.getElementById('dm-photo-count');
-    imagesEl.innerHTML = ''; dotsEl.innerHTML = '';
-
-    if (dmPhotos.length === 0) {
-      imagesEl.innerHTML = '<div class="dm-no-image">🌴</div>';
-      prevBtn.style.display = 'none'; nextBtn.style.display = 'none';
-      countEl.textContent = '';
-    } else {
-      dmPhotos.forEach((url, i) => {
-        const img = document.createElement('img');
-        img.src = url; img.className = i === 0 ? 'active' : '';
-        img.onerror = () => img.style.background = '#f0e6d6';
-        imagesEl.appendChild(img);
-        const dot = document.createElement('div');
-        dot.className = 'dm-dot' + (i === 0 ? ' active' : '');
-        dotsEl.appendChild(dot);
-      });
-      prevBtn.style.display = dmPhotos.length > 1 ? 'flex' : 'none';
-      nextBtn.style.display = dmPhotos.length > 1 ? 'flex' : 'none';
-      countEl.textContent = dmPhotos.length > 1 ? '📷 ' + dmPhotos.length + ' photos' : '';
-    }
-
-    // Details
-    document.getElementById('dm-category').textContent = pkg.category || '🌴 Tour Package';
-    document.getElementById('dm-title').textContent = pkg.name || '';
-    document.getElementById('dm-description').textContent = pkg.description || 'No description added yet.';
-
-    // Info chips
-    const infoRow = document.getElementById('dm-info-row');
-    infoRow.innerHTML = '';
-    if (pkg.duration) infoRow.innerHTML += `<div class="dm-chip">🕐 ${pkg.duration}</div>`;
-    if (pkg.price) infoRow.innerHTML += `<div class="dm-chip">💰 ₹${pkg.price}/person</div>`;
-
-    // Includes
-    const includesEl = document.getElementById('dm-includes');
-    const includes = pkg.includes ? pkg.includes.split(',').map(t => t.trim()).filter(Boolean) : [];
-    includesEl.innerHTML = includes.length > 0
-      ? includes.map(t => `<span class="dm-include-tag">✓ ${t}</span>`).join('')
-      : '<span style="color:var(--muted);font-size:13px;">No items listed.</span>';
-
-    // Price
-    document.getElementById('dm-price').innerHTML = pkg.price ? `₹${pkg.price} <small>/person</small>` : '—';
-
-    document.getElementById('details-modal-bg').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
-
-  window.closeDetails = () => {
-    document.getElementById('details-modal-bg').classList.remove('open');
-    document.body.style.overflow = '';
-  };
-
-  window.dmNav = (dir) => {
-    const imgs = document.querySelectorAll('#dm-images img');
-    const dots = document.querySelectorAll('#dm-dots .dm-dot');
-    if (!imgs.length) return;
-    imgs[dmIdx].classList.remove('active');
-    dots[dmIdx]?.classList.remove('active');
-    dmIdx = (dmIdx + dir + dmPhotos.length) % dmPhotos.length;
-    imgs[dmIdx].classList.add('active');
-    dots[dmIdx]?.classList.add('active');
-  };
-
-  // Close on background click
-  document.getElementById('details-modal-bg').addEventListener('click', (e) => {
-    if (e.target === document.getElementById('details-modal-bg')) closeDetails();
-  });
+// ══ DRIVER PAGES ══
+onValue(ref(db,'taxis'), snap => {
+  const drivers=snap.val()||{};
+  const pageMap={};
+  Object.values(drivers).forEach(d=>{ if(d.pageNumber) pageMap[d.pageNumber]=d.driverName; });
+  const grid=document.getElementById('driver-pages-grid');
+  grid.innerHTML='';
+  for(let i=1;i<=50;i++){
+    const assigned=!!pageMap[i];
+    const card=document.createElement('div');
+    card.className='driver-page-card'+(assigned?' assigned':'');
+    card.innerHTML=`<div class="driver-page-num">#${i}</div><div class="driver-page-name">${pageMap[i]||'Unassigned'}</div><a class="driver-page-link" href="driver.html?id=${i}" target="_blank">Open →</a>`;
+    grid.appendChild(card);
+  }
+});
 </script>
 </body>
 </html>

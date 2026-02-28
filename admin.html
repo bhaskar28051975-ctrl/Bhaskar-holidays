@@ -57,19 +57,68 @@
     /* ═══ GOA PLACES FIELD ═══ */
     .places-section{ background:#f8faff; border:1.5px solid #c7d7f5; border-radius:14px; padding:14px; margin-bottom:1rem; }
     .places-section-title{ font-size:12px; font-weight:700; color:#1d4ed8; text-transform:uppercase; letter-spacing:.5px; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
-    .place-card{ background:#fff; border:1.5px solid var(--border); border-radius:12px; padding:10px; margin-bottom:8px; }
-    .place-card-top{ display:flex; gap:10px; align-items:flex-start; }
-    .place-img-preview{ width:70px; height:56px; object-fit:cover; border-radius:8px; flex-shrink:0; background:#f0e6d6; border:1px solid var(--border); }
-    .place-inputs{ flex:1; display:flex; flex-direction:column; gap:6px; }
+
+    /* Place card — full width layout matching driver popup */
+    .place-card{
+      background:#fff; border:1.5px solid var(--border);
+      border-radius:14px; margin-bottom:10px;
+      overflow:hidden;
+    }
+    .place-card-header{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:8px 10px 0 10px;
+    }
+    .place-card-num{
+      font-size:11px; font-weight:700; color:#1d4ed8;
+      text-transform:uppercase; letter-spacing:.5px;
+    }
+    .place-rm-btn{
+      background:none; border:none; color:var(--danger);
+      font-size:18px; cursor:pointer; padding:0; line-height:1;
+    }
+
+    /* Big image preview — like driver popup */
+    .place-img-preview{
+      width:100%; height:150px; object-fit:cover;
+      background:#f0e6d6; display:block;
+      margin-top:8px;
+    }
+    .place-img-preview.empty{
+      display:flex; align-items:center; justify-content:center;
+      font-size:2rem; color:#ccc;
+    }
+
+    /* Inputs below image */
+    .place-inputs{
+      display:flex; flex-direction:column; gap:7px;
+      padding:10px;
+    }
     .place-inputs input,.place-inputs textarea{
-      width:100%; padding:7px 10px; border:1.5px solid var(--border);
+      width:100%; padding:8px 10px; border:1.5px solid var(--border);
       border-radius:8px; font-size:12px; font-family:'DM Sans',sans-serif;
       background:#fffaf5; outline:none; transition:.2s;
     }
     .place-inputs input:focus,.place-inputs textarea:focus{ border-color:var(--primary); background:#fff; }
-    .place-inputs textarea{ resize:vertical; min-height:52px; }
-    .place-rm-btn{ background:none; border:none; color:var(--danger); font-size:18px; cursor:pointer; padding:0; flex-shrink:0; line-height:1; }
-    .add-place-btn{ width:100%; padding:8px; background:#eef4ff; border:1.5px dashed #3b82f6; border-radius:10px; color:#1d4ed8; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; transition:.2s; }
+    .place-inputs textarea{ resize:vertical; min-height:60px; }
+
+    /* Live preview label */
+    .place-preview-label{
+      font-size:10px; color:var(--muted); font-weight:700;
+      text-transform:uppercase; letter-spacing:.5px;
+      padding:0 10px 4px 10px;
+    }
+    /* Place name live preview */
+    .place-name-live{
+      font-size:13px; font-weight:800; color:var(--dark);
+      padding:0 10px 2px 10px;
+      font-family:'Syne',sans-serif;
+    }
+    .place-desc-live{
+      font-size:11px; color:var(--muted);
+      padding:0 10px 10px 10px; line-height:1.5;
+    }
+
+    .add-place-btn{ width:100%; padding:9px; background:#eef4ff; border:1.5px dashed #3b82f6; border-radius:10px; color:#1d4ed8; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; transition:.2s; margin-top:2px; }
     .add-place-btn:hover{ background:#dbeafe; }
 
     /* INFO BOX */
@@ -362,22 +411,59 @@ function getPhotos(listId){
 // ── GOA PLACE FIELD ──
 window.addPlaceItem = (listId, place={}) => {
   const list=document.getElementById(listId); if(!list) return;
-  const card=document.createElement('div'); card.className='place-card';
-  const imgEl=document.createElement('img'); imgEl.className='place-img-preview'; imgEl.src=place.image||'';
-  const inputs=document.createElement('div'); inputs.className='place-inputs';
+  const idx = list.querySelectorAll('.place-card').length + 1;
 
-  const nameInp=document.createElement('input'); nameInp.placeholder='Place name (e.g. Baga Beach)'; nameInp.value=place.name||''; nameInp.dataset.field='name';
-  const imgInp=document.createElement('input'); imgInp.placeholder='Place image URL'; imgInp.value=place.image||''; imgInp.dataset.field='image';
-  imgInp.oninput=()=>{ imgEl.src=imgInp.value.trim(); imgEl.onerror=()=>imgEl.src=''; };
-  const descTa=document.createElement('textarea'); descTa.placeholder='Short description of this place...'; descTa.value=place.desc||''; descTa.dataset.field='desc';
+  const card = document.createElement('div'); card.className='place-card';
 
-  inputs.append(nameInp,imgInp,descTa);
-  const rmBtn=document.createElement('button'); rmBtn.className='place-rm-btn'; rmBtn.innerHTML='×'; rmBtn.onclick=()=>card.remove();
-  const top=document.createElement('div'); top.className='place-card-top';
-  top.append(imgEl,inputs,rmBtn);
-  card.appendChild(top);
+  // Header row: "Stop N" label + delete button
+  const header = document.createElement('div'); header.className='place-card-header';
+  const numLabel = document.createElement('div'); numLabel.className='place-card-num'; numLabel.textContent='📍 Stop ' + idx;
+  const rmBtn = document.createElement('button'); rmBtn.className='place-rm-btn'; rmBtn.innerHTML='🗑️ Remove';
+  rmBtn.onclick = () => { card.remove(); renumberPlaces(listId); };
+  header.append(numLabel, rmBtn);
+
+  // Big image preview
+  const imgEl = document.createElement('img'); imgEl.className='place-img-preview';
+  if(place.image){ imgEl.src=place.image; } else { imgEl.src=''; imgEl.style.cssText='width:100%;height:80px;display:flex;align-items:center;justify-content:center;background:#f0e6d6;'; }
+  imgEl.onerror = () => { imgEl.src=''; imgEl.style.background='#f0e6d6'; };
+
+  // Inputs
+  const inputs = document.createElement('div'); inputs.className='place-inputs';
+  const nameInp = document.createElement('input');
+  nameInp.placeholder='Place name (e.g. Baga Beach)'; nameInp.value=place.name||''; nameInp.dataset.field='name';
+
+  const imgInp = document.createElement('input');
+  imgInp.placeholder='Place image URL — paste here'; imgInp.value=place.image||''; imgInp.dataset.field='image';
+  imgInp.oninput = () => {
+    const u=imgInp.value.trim();
+    imgEl.src=u; imgEl.style.height='150px';
+    imgEl.onerror=()=>{ imgEl.src=''; imgEl.style.height='80px'; };
+    nameLive.textContent = nameInp.value.trim() || '';
+  };
+
+  const descTa = document.createElement('textarea');
+  descTa.placeholder='Description shown in popup (e.g. Have a gala time enjoying Goan dances...)';
+  descTa.value=place.desc||''; descTa.dataset.field='desc';
+  descTa.oninput = () => { descLive.textContent = descTa.value.trim(); };
+
+  inputs.append(nameInp, imgInp, descTa);
+  nameInp.oninput = () => { nameLive.textContent = nameInp.value.trim(); };
+
+  // Live preview labels
+  const previewLabel = document.createElement('div'); previewLabel.className='place-preview-label'; previewLabel.textContent='👁 Live Preview ↓';
+  const nameLive = document.createElement('div'); nameLive.className='place-name-live'; nameLive.textContent=place.name||'';
+  const descLive = document.createElement('div'); descLive.className='place-desc-live'; descLive.textContent=place.desc||'';
+
+  card.append(header, imgEl, inputs, previewLabel, nameLive, descLive);
   list.appendChild(card);
+
+  // Set image height if pre-filled
+  if(place.image){ imgEl.style.height='150px'; }
 };
+
+function renumberPlaces(listId){
+  document.querySelectorAll(`#${listId} .place-card-num`).forEach((el,i)=>{ el.textContent='📍 Stop '+(i+1); });
+}
 function getPlaces(listId){
   const places={}; let i=0;
   document.querySelectorAll(`#${listId} .place-card`).forEach(card=>{

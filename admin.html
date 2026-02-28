@@ -84,6 +84,49 @@
     .gal-item { position: relative; border-radius: 10px; overflow: hidden; }
     .gal-item img { width: 100%; height: 80px; object-fit: cover; display: block; }
     .gal-item button { position: absolute; top: 4px; right: 4px; background: rgba(239,68,68,0.9); color: #fff; border: none; border-radius: 6px; padding: 2px 7px; cursor: pointer; font-size: 14px; }
+
+    /* ── VIEW DETAILS POPUP ── */
+    .details-modal-bg {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6); z-index: 600;
+      justify-content: center; align-items: center;
+      padding: 1rem; backdrop-filter: blur(4px);
+    }
+    .details-modal-bg.open { display: flex; }
+    .details-modal {
+      background: #fff; border-radius: 22px;
+      width: 100%; max-width: 640px;
+      max-height: 90vh; overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      animation: popIn 0.3s ease;
+    }
+    @keyframes popIn { from { opacity:0; transform:scale(0.93) translateY(20px); } to { opacity:1; transform:scale(1) translateY(0); } }
+    .dm-gallery { position: relative; height: 240px; background: #f0e6d6; border-radius: 22px 22px 0 0; overflow: hidden; }
+    .dm-gallery img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.45s; }
+    .dm-gallery img.active { opacity: 1; }
+    .dm-gal-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 34px; height: 34px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 2; }
+    .dm-gal-prev { left: 12px; } .dm-gal-next { right: 12px; }
+    .dm-gal-dots { position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 5px; }
+    .dm-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.5); transition: all 0.2s; }
+    .dm-dot.active { background: #fff; transform: scale(1.3); }
+    .dm-photo-count { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.5); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 20px; }
+    .dm-close-btn { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.45); border: none; color: #fff; border-radius: 50%; width: 32px; height: 32px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 3; }
+    .dm-no-image { display: flex; align-items: center; justify-content: center; height: 100%; font-size: 4rem; }
+    .dm-body { padding: 1.5rem; }
+    .dm-category { display: inline-block; background: #fff3e0; color: var(--primary); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 10px; border-radius: 20px; margin-bottom: 0.6rem; }
+    .dm-title { font-family: 'Syne', sans-serif; font-size: 1.4rem; color: var(--dark); margin-bottom: 0.75rem; }
+    .dm-info-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .dm-chip { display: flex; align-items: center; gap: 5px; background: var(--bg); border: 1px solid var(--border); padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--dark); }
+    .dm-desc-title { font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 0.4rem; }
+    .dm-description { color: #374151; font-size: 0.93rem; line-height: 1.75; margin-bottom: 1rem; white-space: pre-line; background: #fffaf5; border-radius: 10px; padding: 1rem; border: 1px solid var(--border); }
+    .dm-includes-title { font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 0.5rem; }
+    .dm-includes { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.2rem; }
+    .dm-include-tag { background: #f0fdf4; border: 1px solid #86efac; color: #166534; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 8px; }
+    .dm-price-row { display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .dm-price { font-family: 'Syne', sans-serif; font-size: 2rem; color: var(--primary); font-weight: 800; }
+    .dm-price small { font-size: 0.7rem; color: var(--muted); font-family: 'DM Sans',sans-serif; font-weight: 400; }
+    .btn-view { background: #eff6ff; color: #1d4ed8; border: 1.5px solid #bfdbfe; }
+    .btn-view:hover { background: #dbeafe; }
   </style>
 </head>
 <body>
@@ -267,6 +310,33 @@
   </div>
 </div>
 
+<!-- VIEW DETAILS POPUP -->
+<div class="details-modal-bg" id="details-modal-bg">
+  <div class="details-modal">
+    <div class="dm-gallery" id="dm-gallery">
+      <button class="dm-close-btn" onclick="closeDetails()">✕</button>
+      <div id="dm-images"></div>
+      <button class="dm-gal-btn dm-gal-prev" id="dm-prev" onclick="dmNav(-1)" style="display:none">‹</button>
+      <button class="dm-gal-btn dm-gal-next" id="dm-next" onclick="dmNav(1)" style="display:none">›</button>
+      <div class="dm-gal-dots" id="dm-dots"></div>
+      <div class="dm-photo-count" id="dm-photo-count"></div>
+    </div>
+    <div class="dm-body">
+      <div class="dm-category" id="dm-category"></div>
+      <div class="dm-title" id="dm-title"></div>
+      <div class="dm-info-row" id="dm-info-row"></div>
+      <div class="dm-desc-title">📋 Description</div>
+      <div class="dm-description" id="dm-description"></div>
+      <div class="dm-includes-title">✅ What's Included</div>
+      <div class="dm-includes" id="dm-includes"></div>
+      <div class="dm-price-row">
+        <div class="dm-price" id="dm-price"></div>
+        <button class="btn btn-ghost" onclick="closeDetails()">✕ Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script type="module">
@@ -386,6 +456,7 @@
             <div class="list-meta">₹${p.price||0}/person • ${p.duration||''} • ${photos.length} photo(s)</div>
           </div>
           <div class="list-actions">
+            <button class="btn btn-view btn-sm" onclick='openDetails(${JSON.stringify(p)})'>👁️ View</button>
             <button class="btn btn-ghost btn-sm" onclick="toggleEdit('${id}')">✏️</button>
             <button class="btn btn-red btn-sm" onclick="openDel('packages/${id}')">🗑️</button>
           </div>
@@ -516,6 +587,86 @@
       card.innerHTML = `<div class="driver-page-num">#${i}</div><div class="driver-page-name">${pageMap[i] || 'Unassigned'}</div><a class="driver-page-link" href="driver.html?id=${i}" target="_blank">Open Page →</a>`;
       grid.appendChild(card);
     }
+  });
+
+  // ── VIEW DETAILS POPUP ──
+  let dmPhotos = [], dmIdx = 0;
+
+  window.openDetails = (pkg) => {
+    dmPhotos = pkg.photos ? Object.values(pkg.photos) : (pkg.image ? [pkg.image] : []);
+    dmIdx = 0;
+
+    // Gallery
+    const imagesEl = document.getElementById('dm-images');
+    const dotsEl = document.getElementById('dm-dots');
+    const prevBtn = document.getElementById('dm-prev');
+    const nextBtn = document.getElementById('dm-next');
+    const countEl = document.getElementById('dm-photo-count');
+    imagesEl.innerHTML = ''; dotsEl.innerHTML = '';
+
+    if (dmPhotos.length === 0) {
+      imagesEl.innerHTML = '<div class="dm-no-image">🌴</div>';
+      prevBtn.style.display = 'none'; nextBtn.style.display = 'none';
+      countEl.textContent = '';
+    } else {
+      dmPhotos.forEach((url, i) => {
+        const img = document.createElement('img');
+        img.src = url; img.className = i === 0 ? 'active' : '';
+        img.onerror = () => img.style.background = '#f0e6d6';
+        imagesEl.appendChild(img);
+        const dot = document.createElement('div');
+        dot.className = 'dm-dot' + (i === 0 ? ' active' : '');
+        dotsEl.appendChild(dot);
+      });
+      prevBtn.style.display = dmPhotos.length > 1 ? 'flex' : 'none';
+      nextBtn.style.display = dmPhotos.length > 1 ? 'flex' : 'none';
+      countEl.textContent = dmPhotos.length > 1 ? '📷 ' + dmPhotos.length + ' photos' : '';
+    }
+
+    // Details
+    document.getElementById('dm-category').textContent = pkg.category || '🌴 Tour Package';
+    document.getElementById('dm-title').textContent = pkg.name || '';
+    document.getElementById('dm-description').textContent = pkg.description || 'No description added yet.';
+
+    // Info chips
+    const infoRow = document.getElementById('dm-info-row');
+    infoRow.innerHTML = '';
+    if (pkg.duration) infoRow.innerHTML += `<div class="dm-chip">🕐 ${pkg.duration}</div>`;
+    if (pkg.price) infoRow.innerHTML += `<div class="dm-chip">💰 ₹${pkg.price}/person</div>`;
+
+    // Includes
+    const includesEl = document.getElementById('dm-includes');
+    const includes = pkg.includes ? pkg.includes.split(',').map(t => t.trim()).filter(Boolean) : [];
+    includesEl.innerHTML = includes.length > 0
+      ? includes.map(t => `<span class="dm-include-tag">✓ ${t}</span>`).join('')
+      : '<span style="color:var(--muted);font-size:13px;">No items listed.</span>';
+
+    // Price
+    document.getElementById('dm-price').innerHTML = pkg.price ? `₹${pkg.price} <small>/person</small>` : '—';
+
+    document.getElementById('details-modal-bg').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeDetails = () => {
+    document.getElementById('details-modal-bg').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  window.dmNav = (dir) => {
+    const imgs = document.querySelectorAll('#dm-images img');
+    const dots = document.querySelectorAll('#dm-dots .dm-dot');
+    if (!imgs.length) return;
+    imgs[dmIdx].classList.remove('active');
+    dots[dmIdx]?.classList.remove('active');
+    dmIdx = (dmIdx + dir + dmPhotos.length) % dmPhotos.length;
+    imgs[dmIdx].classList.add('active');
+    dots[dmIdx]?.classList.add('active');
+  };
+
+  // Close on background click
+  document.getElementById('details-modal-bg').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('details-modal-bg')) closeDetails();
   });
 </script>
 </body>

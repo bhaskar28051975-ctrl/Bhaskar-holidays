@@ -8,9 +8,9 @@
   <style>
     :root{ --primary:#e8730a; --dark:#1a1a2e; --light:#fff8f0; --muted:#64748b; --border:#ffe0c0; --green:#25d366; }
     *{ box-sizing:border-box; margin:0; padding:0; }
-    body{ font-family:'DM Sans',sans-serif; background:var(--light); min-height:100vh; color:var(--dark); }
+    body{ font-family:'DM Sans',sans-serif; background:var(--light); color:var(--dark); }
 
-    /* HEADER */
+    /* ── HEADER ── */
     .header{ background:linear-gradient(135deg,#1a1a2e,#0f3460); padding:2.5rem 5%; color:#fff; position:relative; overflow:hidden; }
     .header::before{ content:''; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=1200') center/cover; opacity:.1; }
     .header-content{ position:relative; max-width:800px; margin:0 auto; text-align:center; }
@@ -26,10 +26,11 @@
     .badge{ background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:#fff; padding:5px 14px; border-radius:20px; font-size:.82rem; font-weight:600; }
     .badge.primary{ background:var(--primary); border-color:var(--primary); }
 
+    /* ── MAIN ── */
     .main{ max-width:800px; margin:0 auto; padding:2rem 5%; }
-    .section-title{ font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--dark); margin-bottom:1rem; display:flex; align-items:center; gap:.5rem; }
+    .section-title{ font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--dark); margin-bottom:1rem; }
 
-    /* TAXI SHOWCASE */
+    /* ── TAXI ── */
     .taxi-showcase{ background:#fff; border-radius:20px; border:1px solid var(--border); box-shadow:0 4px 24px rgba(0,0,0,.07); overflow:hidden; margin-bottom:1.5rem; }
     .taxi-img{ width:100%; height:220px; object-fit:cover; background:#f0e6d6; display:block; }
     .taxi-info{ padding:1.5rem; }
@@ -39,17 +40,15 @@
     .spec-icon{ font-size:1.5rem; margin-bottom:.25rem; }
     .spec-value{ font-weight:700; color:var(--dark); font-size:.95rem; }
     .spec-label{ color:var(--muted); font-size:.78rem; }
-    .taxi-number-plate{ margin-top:1rem; background:var(--dark); color:#fff; padding:.6rem 1.2rem; border-radius:8px; font-weight:700; font-size:1rem; display:inline-block; letter-spacing:2px; }
+    .taxi-plate{ margin-top:1rem; background:var(--dark); color:#fff; padding:.6rem 1.2rem; border-radius:8px; font-weight:700; font-size:1rem; display:inline-block; letter-spacing:2px; }
 
-    /* DRIVER GALLERY */
+    /* ── DRIVER GALLERY ── */
     .gallery-section{ background:#fff; border-radius:20px; border:1px solid var(--border); padding:1.5rem; margin-bottom:1.5rem; }
     .gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-    .gallery-grid img{ width:100%; height:100px; object-fit:cover; border-radius:10px; cursor:pointer; transition:transform .2s,opacity .2s; }
-    .gallery-grid img:hover{ transform:scale(1.03); opacity:.9; }
+    .gallery-grid img{ width:100%; height:100px; object-fit:cover; border-radius:10px; cursor:pointer; }
 
-    /* PACKAGE CARD */
-    .pkg-card{ background:#fff; border-radius:18px; border:1px solid var(--border); overflow:hidden; margin-bottom:1.2rem; box-shadow:0 4px 16px rgba(0,0,0,.06); transition:transform .2s; }
-    .pkg-card:hover{ transform:translateY(-3px); }
+    /* ── PACKAGE CARD ── */
+    .pkg-card{ background:#fff; border-radius:18px; border:1px solid var(--border); overflow:hidden; margin-bottom:1.2rem; box-shadow:0 4px 16px rgba(0,0,0,.06); }
     .pkg-img-wrap{ position:relative; height:180px; background:#f0e6d6; overflow:hidden; }
     .pkg-img-wrap img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .5s; }
     .pkg-img-wrap img.active{ opacity:1; }
@@ -57,7 +56,7 @@
     .pg-prev{ left:8px; } .pg-next{ right:8px; }
     .pkg-cat-badge{ position:absolute; top:12px; left:12px; background:var(--primary); color:#fff; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; }
     .pkg-body{ padding:1.2rem; }
-    .pkg-name{ font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--dark); margin-bottom:.4rem; }
+    .pkg-name{ font-family:'Playfair Display',serif; font-size:1.2rem; margin-bottom:.4rem; }
     .pkg-desc{ color:var(--muted); font-size:.88rem; line-height:1.6; margin-bottom:.75rem; }
     .pkg-tags{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:.75rem; }
     .pkg-tag{ background:#fff3e0; color:var(--primary); font-size:11px; font-weight:600; padding:3px 9px; border-radius:6px; }
@@ -66,169 +65,143 @@
     .pkg-price{ font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--primary); font-weight:900; }
     .pkg-price small{ font-size:.7rem; color:var(--muted); font-family:'DM Sans',sans-serif; font-weight:400; }
     .pkg-actions{ display:flex; flex-direction:column; gap:6px; }
+    .book-btn{ padding:8px 14px; border-radius:8px; font-weight:700; font-size:12px; text-decoration:none; display:flex; align-items:center; gap:5px; justify-content:center; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; }
+    .book-driver{ background:var(--green); color:#fff; }
+    .book-admin{ background:var(--primary); color:#fff; }
+    .view-places-btn{ padding:8px 16px; border-radius:8px; background:#eff6ff; color:#1d4ed8; border:1.5px solid #bfdbfe; font-weight:700; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif; display:flex; align-items:center; gap:5px; }
 
-    /* BOOK BUTTONS */
-    .book-btn{ padding:8px 14px; border-radius:8px; font-weight:700; font-size:12px; text-decoration:none; display:flex; align-items:center; gap:5px; justify-content:center; transition:.2s; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; }
-    .book-driver{ background:var(--green); color:#fff; } .book-driver:hover{ background:#1ebe5d; }
-    .book-admin{ background:var(--primary); color:#fff; } .book-admin:hover{ background:#d4640a; }
-
-    /* VIEW DETAILS BUTTON */
-    .view-details-btn{ padding:8px 16px; border-radius:8px; background:#eff6ff; color:#1d4ed8; border:1.5px solid #bfdbfe; font-weight:700; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:.2s; display:flex; align-items:center; gap:5px; }
-    .view-details-btn:hover{ background:#dbeafe; }
-
-    /* CTA BOX */
+    /* ── CTA ── */
     .cta-box{ background:linear-gradient(135deg,var(--primary),#d4640a); border-radius:20px; padding:2rem; text-align:center; color:#fff; margin-bottom:1.5rem; }
     .cta-box h3{ font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:.5rem; }
-    .cta-box p{ opacity:.9; margin-bottom:1.5rem; font-size:.95rem; }
+    .cta-box p{ opacity:.9; margin-bottom:1.5rem; }
     .cta-btns{ display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; }
-    .cta-btn{ padding:.8rem 1.6rem; border-radius:10px; font-weight:700; font-size:.95rem; text-decoration:none; display:inline-flex; align-items:center; gap:6px; transition:.2s; }
-    .cta-wa-d{ background:var(--green); color:#fff; } .cta-wa-d:hover{ background:#1ebe5d; }
-    .cta-wa-a{ background:rgba(255,255,255,.2); color:#fff; border:2px solid rgba(255,255,255,.5); } .cta-wa-a:hover{ background:rgba(255,255,255,.3); }
-    .cta-call{ background:rgba(255,255,255,.15); color:#fff; border:2px solid rgba(255,255,255,.3); } .cta-call:hover{ background:rgba(255,255,255,.25); }
+    .cta-btn{ padding:.8rem 1.6rem; border-radius:10px; font-weight:700; font-size:.95rem; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+    .cta-wa-d{ background:var(--green); color:#fff; }
+    .cta-wa-a{ background:rgba(255,255,255,.2); color:#fff; border:2px solid rgba(255,255,255,.5); }
+    .cta-call{ background:rgba(255,255,255,.15); color:#fff; border:2px solid rgba(255,255,255,.3); }
 
-    /* ══════════════════════════════
-       PLACES POPUP MODAL
-    ══════════════════════════════ */
+    /* ══════════════════════════════════════
+       PLACES POPUP — KEY RULE:
+       The modal is a flex column. The image
+       is a direct flex child → width:100%
+       means 100% of the modal width.
+       overflow-x:hidden on modal clips nothing
+       because image never overflows.
+    ══════════════════════════════════════ */
+
+    /* Dark overlay */
     .places-modal-bg{
       display:none; position:fixed; inset:0;
-      background:rgba(0,0,0,.65); z-index:1000;
+      background:rgba(0,0,0,.7); z-index:1000;
       justify-content:center; align-items:flex-end;
-      backdrop-filter:blur(4px);
     }
     .places-modal-bg.open{ display:flex; }
+
+    /* The sheet — flex column, NO padding */
     .places-modal{
-      background:#fff; border-radius:24px 24px 0 0;
-      width:100%; max-width:640px; margin:0 auto;
-      max-height:90vh; overflow-y:auto; overflow-x:hidden;
-      box-shadow:0 -8px 40px rgba(0,0,0,.2);
-      animation:slideUp .35s cubic-bezier(.25,.8,.25,1);
+      display:flex;
+      flex-direction:column;
+      width:100%;
+      max-width:640px;
+      max-height:90vh;
+      background:#fff;
+      border-radius:22px 22px 0 0;
+      overflow:hidden;               /* clips border-radius cleanly */
+      box-shadow:0 -8px 40px rgba(0,0,0,.25);
+      animation:slideUp .3s ease;
     }
-    @media(min-width:680px){
+    @media(min-width:660px){
       .places-modal-bg{ align-items:center; padding:1rem; }
-      .places-modal{ border-radius:24px; max-height:88vh; }
+      .places-modal{ border-radius:22px; max-height:86vh; }
     }
-    @keyframes slideUp{ from{ transform:translateY(100%); opacity:0; } to{ transform:translateY(0); opacity:1; } }
+    @keyframes slideUp{ from{transform:translateY(60px);opacity:0} to{transform:translateY(0);opacity:1} }
 
-    /* Modal header */
+    /* Sticky header — fixed height */
     .pm-header{
-      position:sticky; top:0; background:#fff; z-index:2;
-      padding:1.2rem 1.5rem 1rem;
-      border-bottom:1px solid var(--border);
+      flex-shrink:0;
+      padding:1.2rem 1.4rem 1rem;
+      border-bottom:1px solid #f0e6d6;
       display:flex; align-items:flex-start; justify-content:space-between; gap:1rem;
+      background:#fff;
     }
-    .pm-pkg-badge{ display:inline-block; background:#fff3e0; color:var(--primary); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; padding:2px 8px; border-radius:12px; margin-bottom:4px; }
-    .pm-pkg-name{ font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--dark); line-height:1.2; }
-    .pm-pkg-meta{ display:flex; gap:.75rem; margin-top:6px; flex-wrap:wrap; }
-    .pm-meta-chip{ background:var(--light); border:1px solid var(--border); padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; color:var(--dark); }
+    .pm-badge{ display:inline-block; background:#fff3e0; color:var(--primary); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; padding:2px 8px; border-radius:12px; margin-bottom:4px; }
+    .pm-pkg-name{ font-family:'Playfair Display',serif; font-size:1.25rem; color:var(--dark); line-height:1.2; }
+    .pm-pkg-meta{ display:flex; gap:.6rem; margin-top:6px; flex-wrap:wrap; }
+    .pm-chip{ background:var(--light); border:1px solid var(--border); padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; color:var(--dark); }
     .pm-close{ background:#f1f5f9; border:none; width:34px; height:34px; border-radius:50%; font-size:18px; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
-    .pm-close:hover{ background:#e2e8f0; }
 
-    /* Modal body — NO padding, images must go edge to edge */
-    .pm-body{ padding:0; }
+    /* Scrollable body — fills remaining space */
+    .pm-scroll{
+      flex:1;
+      overflow-y:auto;
+      overflow-x:hidden;
+    }
 
-    /* Places title inside body with padding */
+    /* Places list — simple block layout */
     .pm-places-title{
       font-size:11px; font-weight:700; text-transform:uppercase;
       letter-spacing:.5px; color:var(--muted);
-      padding:1rem 1.5rem 0.5rem 1.5rem;
-    }
-    .pm-places-list{ display:flex; flex-direction:column; }
-
-    /* Thick grey divider between places */
-    .pm-place + .pm-place{ border-top:10px solid #f2f2f2; }
-
-    /* Each place block — NO overflow hidden, NO padding */
-    .pm-place{
-      display:flex; flex-direction:column;
-      background:#fff;
-      padding-bottom:1.5rem;
+      padding:.9rem 1.4rem .5rem;
     }
 
-    /* ★ THE FIX: image is a direct child, full width, NO margin/padding */
+    /* Each place */
+    .pm-place{ background:#fff; padding-bottom:1.4rem; }
+    .pm-place + .pm-place{ border-top:10px solid #f3f3f3; }
+
+    /* ★★★ IMAGE — block element, width 100%, no border-radius ★★★ */
     .pm-place-img{
-      display:block;
-      width:100%;
-      height:240px;
-      object-fit:cover;
+      display:block !important;
+      width:100% !important;
+      height:240px !important;
+      object-fit:cover !important;
       background:#f0e6d6;
+      border-radius:0 !important;
+      margin:0 !important;
+      padding:0 !important;
+      border:none !important;
       cursor:pointer;
-      flex-shrink:0;
-      /* Ensure no inherited constraints */
-      max-width:100%;
-      margin:0;
-      padding:0;
-      border:none;
-      border-radius:0;
-    }
-    .pm-place-img:active{ opacity:.85; }
-
-    /* Text block — padded */
-    .pm-place-info{ padding:0.9rem 1.5rem 0 1.5rem; }
-
-    /* Stop label in orange like screenshot */
-    .pm-place-num{
-      font-size:14px; font-weight:700;
-      color:var(--primary);
-      margin-bottom:6px;
     }
 
-    /* ALL CAPS bold place name like screenshot */
-    .pm-place-name{
-      font-size:1.35rem; font-weight:900;
-      color:var(--dark); margin-bottom:5px;
-      font-family:'Playfair Display',serif;
-      line-height:1.25;
-      text-transform:uppercase;
-      letter-spacing:0.5px;
-    }
+    /* Text under image */
+    .pm-place-body{ padding:.9rem 1.4rem 0; }
+    .pm-place-stop{ font-size:13px; font-weight:700; color:var(--primary); margin-bottom:5px; }
+    .pm-place-name{ font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:900; color:var(--dark); text-transform:uppercase; letter-spacing:.5px; line-height:1.2; margin-bottom:4px; }
+    .pm-place-caption{ font-size:.88rem; font-style:italic; font-weight:700; color:#374151; margin-bottom:9px; }
+    .pm-place-desc{ font-size:.97rem; color:#374151; line-height:1.8; }
 
-    /* Italic caption like "miramar beach, goa" */
-    .pm-place-caption{
-      font-size:.9rem; font-style:italic;
-      color:#374151; font-weight:700;
-      margin-bottom:10px;
-    }
+    /* No places */
+    .pm-empty{ text-align:center; padding:3rem 1rem; color:var(--muted); font-size:1rem; }
 
-    /* Large readable description */
-    .pm-place-desc{
-      font-size:1rem; color:#374151;
-      line-height:1.8;
-    }
-
-    /* No places state */
-    .pm-no-places{ text-align:center; padding:2.5rem 1rem; color:var(--muted); }
-    .pm-no-places .icon{ font-size:3rem; margin-bottom:.75rem; }
-
-    /* Booking row pinned at bottom */
+    /* Sticky book buttons at bottom */
     .pm-book-row{
-      position:sticky; bottom:0; background:#fff;
-      padding:1rem 1.5rem; border-top:1px solid var(--border);
+      flex-shrink:0;
+      padding:1rem 1.4rem;
+      border-top:1px solid #f0e6d6;
+      background:#fff;
       display:flex; gap:.75rem;
     }
     .pm-book-btn{
-      flex:1; padding:.9rem 1rem; border-radius:12px;
-      font-weight:700; font-size:1rem; text-decoration:none;
-      display:flex; align-items:center; justify-content:center;
-      gap:6px; transition:.2s; border:none; cursor:pointer;
-      font-family:'DM Sans',sans-serif;
+      flex:1; padding:.85rem 1rem; border-radius:12px;
+      font-weight:700; font-size:.95rem; text-decoration:none;
+      display:flex; align-items:center; justify-content:center; gap:6px;
+      border:none; cursor:pointer; font-family:'DM Sans',sans-serif;
     }
-    .pm-book-driver{ background:var(--green); color:#fff; } .pm-book-driver:hover{ background:#1ebe5d; }
-    .pm-book-admin{ background:var(--primary); color:#fff; } .pm-book-admin:hover{ background:#d4640a; }
+    .pm-book-d{ background:var(--green); color:#fff; }
+    .pm-book-a{ background:var(--primary); color:#fff; }
 
-    /* LIGHTBOX */
-    .lightbox{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.93); z-index:2000; justify-content:center; align-items:center; flex-direction:column; gap:1rem; }
+    /* ── LIGHTBOX ── */
+    .lightbox{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.94); z-index:2000; flex-direction:column; justify-content:center; align-items:center; gap:1rem; }
     .lightbox.open{ display:flex; }
-    .lightbox img{ max-width:92vw; max-height:82vh; border-radius:12px; object-fit:contain; }
+    .lightbox img{ max-width:92vw; max-height:82vh; border-radius:10px; object-fit:contain; }
     .lb-close{ position:absolute; top:16px; right:20px; background:none; border:none; color:#fff; font-size:32px; cursor:pointer; }
-    .lb-nav{ display:flex; gap:1rem; }
-    .lb-nav button{ background:rgba(255,255,255,.15); color:#fff; border:none; border-radius:8px; padding:8px 20px; font-size:18px; cursor:pointer; }
+    .lb-nav button{ background:rgba(255,255,255,.15); color:#fff; border:none; border-radius:8px; padding:8px 20px; font-size:20px; cursor:pointer; }
 
-    /* WA FLOAT */
+    /* ── WA FLOAT ── */
     .wa-float{ position:fixed; bottom:24px; right:24px; background:var(--green); color:#fff; width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:26px; text-decoration:none; box-shadow:0 4px 20px rgba(37,211,102,.5); z-index:99; animation:pulse 2s infinite; }
-    @keyframes pulse{ 0%,100%{ box-shadow:0 4px 20px rgba(37,211,102,.5); } 50%{ box-shadow:0 4px 40px rgba(37,211,102,.8); } }
+    @keyframes pulse{ 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.5)} 50%{box-shadow:0 4px 40px rgba(37,211,102,.8)} }
 
     .not-found{ text-align:center; padding:4rem 2rem; }
-    .not-found h2{ font-family:'Playfair Display',serif; font-size:2rem; color:var(--dark); }
+    .not-found h2{ font-family:'Playfair Display',serif; font-size:2rem; }
     .not-found p{ color:var(--muted); margin-top:.5rem; }
     .loading{ text-align:center; padding:4rem; color:var(--muted); font-size:1.1rem; }
 
@@ -236,7 +209,6 @@
       .taxi-specs{ grid-template-columns:repeat(2,1fr); }
       .cta-btns{ flex-direction:column; }
       .gallery-grid{ grid-template-columns:repeat(2,1fr); }
-      .pm-place-img{ width:70px; height:65px; }
     }
   </style>
 </head>
@@ -244,30 +216,37 @@
 
 <div id="app"><div class="loading">⏳ Loading...</div></div>
 
-<!-- PLACES POPUP MODAL -->
-<div class="places-modal-bg" id="places-modal">
-  <div class="places-modal" id="places-modal-inner">
+<!-- ═══ PLACES POPUP ═══ -->
+<div class="places-modal-bg" id="places-modal-bg" onclick="bgClose(event)">
+  <div class="places-modal">
+
+    <!-- Sticky Header -->
     <div class="pm-header">
-      <div class="pm-header-left">
-        <div class="pm-pkg-badge" id="pm-badge"></div>
+      <div>
+        <div class="pm-badge" id="pm-badge"></div>
         <div class="pm-pkg-name" id="pm-pkg-name"></div>
         <div class="pm-pkg-meta" id="pm-pkg-meta"></div>
       </div>
-      <button class="pm-close" onclick="closePlacesModal()">✕</button>
+      <button class="pm-close" onclick="closePlaces()">✕</button>
     </div>
-    <div class="pm-body">
+
+    <!-- Scrollable content -->
+    <div class="pm-scroll">
       <div class="pm-places-title">🏖️ Places You'll Visit</div>
-      <div class="pm-places-list" id="pm-places-list"></div>
+      <div id="pm-list"></div>
     </div>
+
+    <!-- Sticky Book buttons -->
     <div class="pm-book-row" id="pm-book-row"></div>
+
   </div>
 </div>
 
-<!-- LIGHTBOX -->
+<!-- ═══ LIGHTBOX ═══ -->
 <div class="lightbox" id="lightbox">
   <button class="lb-close" onclick="closeLb()">✕</button>
   <img id="lb-img" src="" alt="">
-  <div class="lb-nav">
+  <div class="lb-nav" style="display:flex;gap:1rem;">
     <button onclick="lbNav(-1)">‹</button>
     <button onclick="lbNav(1)">›</button>
   </div>
@@ -277,266 +256,244 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB0_DZfEQc_uQF2Dx8WmUt4WkJ0sY8Jai4",
-  authDomain: "bhaskar-holidays.firebaseapp.com",
-  databaseURL: "https://bhaskar-holidays-default-rtdb.firebaseio.com",
-  projectId: "bhaskar-holidays",
-  storageBucket: "bhaskar-holidays.firebasestorage.app",
-  messagingSenderId: "1092104643884",
-  appId: "1:1092104643884:web:42bf618858028b51b3b889"
+const cfg = {
+  apiKey:"AIzaSyB0_DZfEQc_uQF2Dx8WmUt4WkJ0sY8Jai4",
+  authDomain:"bhaskar-holidays.firebaseapp.com",
+  databaseURL:"https://bhaskar-holidays-default-rtdb.firebaseio.com",
+  projectId:"bhaskar-holidays",
+  storageBucket:"bhaskar-holidays.firebasestorage.app",
+  messagingSenderId:"1092104643884",
+  appId:"1:1092104643884:web:42bf618858028b51b3b889"
 };
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const ADMIN_WA = '919154095125';
-
-const pageId = parseInt(new URLSearchParams(window.location.search).get('id')) || 1;
+const db = getDatabase(initializeApp(cfg));
+const ADMIN = '919154095125';
+const pageId = parseInt(new URLSearchParams(location.search).get('id')) || 1;
 document.title = `Driver #${pageId} — Bhaskar Holidays`;
 
-// ── LIGHTBOX ──
+/* ── LIGHTBOX ── */
 let lbImgs=[], lbIdx=0;
-window.openLb = (imgs,idx) => { lbImgs=imgs; lbIdx=idx; document.getElementById('lb-img').src=lbImgs[lbIdx]; document.getElementById('lightbox').classList.add('open'); };
+window.openLb = (imgs,i) => { lbImgs=imgs; lbIdx=i; document.getElementById('lb-img').src=lbImgs[i]; document.getElementById('lightbox').classList.add('open'); };
 window.closeLb = () => document.getElementById('lightbox').classList.remove('open');
 window.lbNav = d => { lbIdx=(lbIdx+d+lbImgs.length)%lbImgs.length; document.getElementById('lb-img').src=lbImgs[lbIdx]; };
 
-// ── PKG IMAGE CAROUSEL ──
+/* ── PACKAGE IMG CAROUSEL ── */
 const pgCur={};
 window.pgNav = (id,dir,total) => {
   if(pgCur[id]===undefined) pgCur[id]=0;
-  const wrap=document.getElementById('pg-'+id);
-  const imgs=wrap.querySelectorAll('img');
+  const imgs=document.getElementById('pg-'+id).querySelectorAll('img');
   imgs[pgCur[id]].classList.remove('active');
   pgCur[id]=(pgCur[id]+dir+total)%total;
   imgs[pgCur[id]].classList.add('active');
 };
 
-// ── PLACES POPUP ──
-window.openPlacesModal = (pkg, driverWa, driverName) => {
+/* ── PLACES POPUP ── */
+window.openPlaces = (pkg, dWa, dName) => {
   const places = pkg.places ? Object.values(pkg.places) : [];
+  const bg = document.getElementById('places-modal-bg');
 
   // Header
-  document.getElementById('pm-badge').textContent = pkg.category || '🌴 Tour Package';
+  document.getElementById('pm-badge').textContent = pkg.category || '🌴 Tour';
   document.getElementById('pm-pkg-name').textContent = pkg.name || '';
   const meta = document.getElementById('pm-pkg-meta');
   meta.innerHTML = '';
-  if(pkg.duration) meta.innerHTML += `<span class="pm-meta-chip">🕐 ${pkg.duration}</span>`;
-  if(pkg.price) meta.innerHTML += `<span class="pm-meta-chip">💰 ₹${pkg.price}/person</span>`;
-  if(places.length) meta.innerHTML += `<span class="pm-meta-chip">🏖️ ${places.length} places</span>`;
+  if(pkg.duration) meta.innerHTML += `<span class="pm-chip">🕐 ${pkg.duration}</span>`;
+  if(pkg.price)    meta.innerHTML += `<span class="pm-chip">💰 ₹${pkg.price}/person</span>`;
+  if(places.length)meta.innerHTML += `<span class="pm-chip">🏖️ ${places.length} places</span>`;
 
   // Places list
-  const list = document.getElementById('pm-places-list');
+  const list = document.getElementById('pm-list');
   list.innerHTML = '';
-  if(places.length === 0){
-    list.innerHTML = `<div class="pm-no-places"><div class="icon">🏖️</div><p>Places will be added soon.</p></div>`;
+
+  if(!places.length){
+    list.innerHTML = '<div class="pm-empty">🏖️<br>Places coming soon!</div>';
   } else {
     const imgUrls = places.filter(p=>p.image).map(p=>p.image);
     places.forEach((pl, i) => {
-      const imgIdx = imgUrls.indexOf(pl.image);
+      const iIdx = imgUrls.indexOf(pl.image);
       const div = document.createElement('div');
       div.className = 'pm-place';
-      div.innerHTML = `
-        ${pl.image
-          ? `<img class="pm-place-img" src="${pl.image}" alt="${pl.name||''}"
-               onerror="this.style.background='#f0e6d6'"
-               onclick="openLb(${JSON.stringify(imgUrls)}, ${imgIdx < 0 ? 0 : imgIdx})">`
-          : `<div style="width:100%;height:140px;background:#f0e6d6;display:flex;align-items:center;justify-content:center;font-size:3rem;">🏖️</div>`
-        }
-        <div class="pm-place-info">
-          <div class="pm-place-num">📍 Stop ${i + 1}</div>
-          <div class="pm-place-name">${pl.name || 'Unknown Place'}</div>
-          <div class="pm-place-caption">${(pl.name || '').toLowerCase()}, goa</div>
+
+      /* ★ IMAGE — set ALL styles via JS setAttribute so nothing can override ★ */
+      let imgHTML = '';
+      if(pl.image){
+        imgHTML = `<img
+          src="${pl.image}"
+          alt="${pl.name||''}"
+          onclick="openLb(${JSON.stringify(imgUrls)},${iIdx<0?0:iIdx})"
+          onerror="this.style.background='#f0e6d6';this.style.height='120px'"
+          style="display:block;width:100%;height:240px;object-fit:cover;background:#f0e6d6;border-radius:0;margin:0;padding:0;border:none;cursor:pointer;flex-shrink:0;">`;
+      } else {
+        imgHTML = `<div style="width:100%;height:120px;background:#f0e6d6;display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🏖️</div>`;
+      }
+
+      div.innerHTML = imgHTML + `
+        <div class="pm-place-body">
+          <div class="pm-place-stop">📍 Stop ${i+1}</div>
+          <div class="pm-place-name">${pl.name||'Unknown Place'}</div>
+          <div class="pm-place-caption">${(pl.name||'').toLowerCase()}, goa</div>
           ${pl.desc ? `<div class="pm-place-desc">${pl.desc}</div>` : ''}
-        </div>
-      `;
+        </div>`;
+
       list.appendChild(div);
     });
   }
 
-  // Book row
-  const bookRow = document.getElementById('pm-book-row');
-  const pkgMsg = encodeURIComponent(`Hi ${driverName}! I want to book the "${pkg.name}" package. Please confirm.`);
-  const adminMsg = encodeURIComponent(`Hi! Booking "${pkg.name}" with driver ${driverName} (Page #${pageId}).`);
-  bookRow.innerHTML = `
-    <a class="pm-book-btn pm-book-driver" href="https://wa.me/${driverWa}?text=${pkgMsg}" target="_blank">💬 Book with Driver</a>
-    <a class="pm-book-btn pm-book-admin" href="https://wa.me/${ADMIN_WA}?text=${adminMsg}" target="_blank">📋 Book via Admin</a>
-  `;
+  // Book buttons
+  const waMsg   = encodeURIComponent(`Hi ${dName}! I want to book the "${pkg.name}" package.`);
+  const admMsg  = encodeURIComponent(`Hi! Booking "${pkg.name}" with driver ${dName} (Page #${pageId}).`);
+  document.getElementById('pm-book-row').innerHTML = `
+    <a class="pm-book-btn pm-book-d" href="https://wa.me/${dWa}?text=${waMsg}" target="_blank">💬 Book with Driver</a>
+    <a class="pm-book-btn pm-book-a" href="https://wa.me/${ADMIN}?text=${admMsg}" target="_blank">📋 Book via Admin</a>`;
 
-  document.getElementById('places-modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  bg.classList.add('open');
+  document.body.style.overflow='hidden';
 };
 
-window.closePlacesModal = () => {
-  document.getElementById('places-modal').classList.remove('open');
-  document.body.style.overflow = '';
+window.closePlaces = () => {
+  document.getElementById('places-modal-bg').classList.remove('open');
+  document.body.style.overflow='';
 };
+window.bgClose = e => { if(e.target===document.getElementById('places-modal-bg')) closePlaces(); };
 
-// Close on background tap
-document.getElementById('places-modal').addEventListener('click', e => {
-  if(e.target === document.getElementById('places-modal')) closePlacesModal();
-});
+/* ── LOAD DATA ── */
+let pkgs={}, driver=null, ready=false;
 
-// ── MAIN LOAD ──
-let pkgsData={}, driverData=null, loaded=false;
+onValue(ref(db,'packages'), s => {
+  pkgs = s.val()||{};
+  if(driver) render();
+}, {onlyOnce:true});
 
-function tryRender(){
-  if(loaded || !driverData || Object.keys(pkgsData).length === 0 && pkgsData.__checked) renderPage();
-}
+onValue(ref(db,'taxis'), s => {
+  const data=s.val();
+  if(!data){ notFound(); return; }
+  const e=Object.entries(data).find(([,d])=>d.pageNumber==pageId);
+  if(!e){ notFound(); return; }
+  driver=e[1];
+  if(!ready) render();   // pkgs may be {} but still render
+}, {onlyOnce:true});
 
-onValue(ref(db,'packages'), snap => {
-  pkgsData = snap.val() || {};
-  pkgsData.__checked = true;
-  if(driverData) renderPage();
-}, { onlyOnce:true });
+function render(){
+  if(ready) return; ready=true;
+  const d=driver;
+  const dWa=d.whatsapp||ADMIN;
+  const avatar=d.driverImage||`https://ui-avatars.com/api/?name=${encodeURIComponent(d.driverName||'D')}&background=e8730a&color=fff&size=200`;
+  const gal=d.gallery?Object.values(d.gallery):[];
+  const waMsg=encodeURIComponent(`Hi ${d.driverName}! I want to book a Goa tour.`);
+  const admMsg=encodeURIComponent(`Hi! Booking a tour with driver ${d.driverName} (Page #${pageId}).`);
 
-onValue(ref(db,'taxis'), snap => {
-  const data=snap.val();
-  const appEl=document.getElementById('app');
-  if(!data){ renderNotFound(appEl); return; }
-  const entry=Object.entries(data).find(([,d])=>d.pageNumber==pageId);
-  if(!entry){ renderNotFound(appEl); return; }
-  driverData=entry[1];
-  if(pkgsData.__checked) renderPage();
-}, { onlyOnce:true });
-
-function renderPage(){
-  if(loaded) return; loaded=true;
-  const driver=driverData;
-  const appEl=document.getElementById('app');
-  const driverWa=driver.whatsapp||ADMIN_WA;
-  const avatar=driver.driverImage||`https://ui-avatars.com/api/?name=${encodeURIComponent(driver.driverName||'Driver')}&background=e8730a&color=fff&size=200`;
-  const galleryPhotos=driver.gallery?Object.values(driver.gallery):[];
-  const waMsg=encodeURIComponent(`Hi ${driver.driverName}! I found your page on Bhaskar Holidays and want to book a tour.`);
-  const adminMsg=encodeURIComponent(`Hi! I want to book a tour with driver ${driver.driverName} (Page #${pageId}).`);
-
-  appEl.innerHTML = `
+  document.getElementById('app').innerHTML=`
     <div class="header">
       <div class="header-content">
         <div class="brand">Bhaskar <span>Holidays</span></div>
         <div class="driver-profile">
           <div class="driver-avatar-wrap">
-            <img class="driver-avatar" src="${avatar}" alt="${driver.driverName}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(driver.driverName||'D')}&background=e8730a&color=fff&size=200'">
+            <img class="driver-avatar" src="${avatar}" alt="${d.driverName}" onerror="this.src='${avatar}'">
             <div class="driver-verified">✓</div>
           </div>
-          <div class="driver-name">${driver.driverName}</div>
+          <div class="driver-name">${d.driverName}</div>
           <div class="driver-tagline">Your personal Goa tour guide 🌴</div>
           <div class="driver-badges">
             <span class="badge primary">Driver #${pageId}</span>
             <span class="badge">⭐ Verified</span>
-            <span class="badge">${driver.type||'Taxi'}</span>
-            <span class="badge">👥 ${driver.capacity||4} Seater</span>
-            ${driver.ac?'<span class="badge">❄️ AC</span>':''}
+            <span class="badge">${d.type||'Taxi'}</span>
+            <span class="badge">👥 ${d.capacity||4} Seater</span>
+            ${d.ac?'<span class="badge">❄️ AC</span>':''}
           </div>
         </div>
       </div>
     </div>
 
     <div class="main">
-
-      <!-- TAXI -->
       <div class="taxi-showcase">
-        <img class="taxi-img" src="${driver.taxiImage||''}" alt="Taxi" onerror="this.style.background='#f0e6d6'">
+        <img class="taxi-img" src="${d.taxiImage||''}" alt="Taxi" onerror="this.style.background='#f0e6d6'">
         <div class="taxi-info">
           <div class="taxi-info-title">🚕 My Taxi Details</div>
           <div class="taxi-specs">
-            <div class="spec"><div class="spec-icon">🚗</div><div class="spec-value">${driver.type||'Taxi'}</div><div class="spec-label">Car Model</div></div>
-            <div class="spec"><div class="spec-icon">👥</div><div class="spec-value">${driver.capacity||4}</div><div class="spec-label">Seater</div></div>
-            <div class="spec"><div class="spec-icon">${driver.ac?'❄️':'🌬️'}</div><div class="spec-value">${driver.ac?'AC':'Non-AC'}</div><div class="spec-label">Comfort</div></div>
+            <div class="spec"><div class="spec-icon">🚗</div><div class="spec-value">${d.type||'Taxi'}</div><div class="spec-label">Car Model</div></div>
+            <div class="spec"><div class="spec-icon">👥</div><div class="spec-value">${d.capacity||4}</div><div class="spec-label">Seater</div></div>
+            <div class="spec"><div class="spec-icon">${d.ac?'❄️':'🌬️'}</div><div class="spec-value">${d.ac?'AC':'Non-AC'}</div><div class="spec-label">Comfort</div></div>
           </div>
-          ${driver.taxiNumber?`<div class="taxi-number-plate">🔢 ${driver.taxiNumber}</div>`:''}
+          ${d.taxiNumber?`<div class="taxi-plate">🔢 ${d.taxiNumber}</div>`:''}
         </div>
       </div>
 
-      <!-- DRIVER GALLERY -->
-      ${galleryPhotos.length>0?`
+      ${gal.length?`
       <div class="gallery-section">
         <div class="section-title">📷 My Photo Gallery</div>
-        <div class="gallery-grid" id="driver-gal"></div>
+        <div class="gallery-grid" id="drv-gal"></div>
       </div>`:''}
 
-      <!-- PACKAGES -->
       <div class="section-title">🗺️ Tour Packages</div>
-      <div id="pkg-section"></div>
+      <div id="pkg-list"></div>
 
-      <!-- CTA -->
       <div class="cta-box">
         <h3>Ready to Explore Goa? 🌴</h3>
-        <p>Book with ${driver.driverName} — your message reaches both driver & admin instantly.</p>
+        <p>Book with ${d.driverName} — message reaches driver & admin instantly.</p>
         <div class="cta-btns">
-          <a class="cta-btn cta-wa-d" href="https://wa.me/${driverWa}?text=${waMsg}" target="_blank">💬 WhatsApp Driver</a>
-          <a class="cta-btn cta-wa-a" href="https://wa.me/${ADMIN_WA}?text=${adminMsg}" target="_blank">📋 WhatsApp Admin</a>
-          <a class="cta-btn cta-call" href="tel:+${driverWa}">📞 Call Driver</a>
+          <a class="cta-btn cta-wa-d" href="https://wa.me/${dWa}?text=${waMsg}" target="_blank">💬 WhatsApp Driver</a>
+          <a class="cta-btn cta-wa-a" href="https://wa.me/${ADMIN}?text=${admMsg}" target="_blank">📋 WhatsApp Admin</a>
+          <a class="cta-btn cta-call" href="tel:+${dWa}">📞 Call Driver</a>
         </div>
       </div>
     </div>
+    <a class="wa-float" href="https://wa.me/${dWa}?text=${waMsg}" target="_blank">💬</a>`;
 
-    <a class="wa-float" href="https://wa.me/${driverWa}?text=${waMsg}" target="_blank" title="Chat with Driver">💬</a>
-  `;
-
-  // Driver gallery
-  if(galleryPhotos.length>0){
-    const galGrid=document.getElementById('driver-gal');
-    galleryPhotos.forEach((url,i)=>{
-      const img=document.createElement('img');
-      img.src=url; img.alt='';
-      img.onerror=()=>img.style.background='#f0e6d6';
-      img.onclick=()=>openLb(galleryPhotos,i);
-      galGrid.appendChild(img);
-    });
+  // driver gallery
+  if(gal.length){
+    const g=document.getElementById('drv-gal');
+    gal.forEach((u,i)=>{ const img=document.createElement('img'); img.src=u; img.onerror=()=>img.style.background='#f0e6d6'; img.onclick=()=>openLb(gal,i); g.appendChild(img); });
   }
 
-  // Packages
-  const pkgSection=document.getElementById('pkg-section');
-  const pkgEntries=Object.entries(pkgsData).filter(([k])=>k!=='__checked');
-  if(pkgEntries.length===0){
-    pkgSection.innerHTML='<p style="color:var(--muted);text-align:center;padding:1.5rem;background:#fff;border-radius:14px;">No packages yet.</p>';
+  // packages
+  const pl=document.getElementById('pkg-list');
+  const entries=Object.entries(pkgs);
+  if(!entries.length){
+    pl.innerHTML='<p style="color:var(--muted);text-align:center;padding:1.5rem;background:#fff;border-radius:14px;">No packages yet.</p>';
     return;
   }
-
-  pkgEntries.forEach(([pkgId,pkg])=>{
+  entries.forEach(([pid,pkg])=>{
     const photos=pkg.photos?Object.values(pkg.photos):(pkg.image?[pkg.image]:[]);
-    const includes=pkg.includes?pkg.includes.split(',').map(t=>t.trim()).filter(Boolean):[];
-    const placesArr=pkg.places?Object.values(pkg.places):[];
-    const pkgWaMsg=encodeURIComponent(`Hi ${driver.driverName}! I want the "${pkg.name}" package. Please confirm.`);
-    const pkgAdminMsg=encodeURIComponent(`Hi! Booking "${pkg.name}" with driver ${driver.driverName} (Page #${pageId}).`);
+    const incs=pkg.includes?pkg.includes.split(',').map(t=>t.trim()).filter(Boolean):[];
+    const places=pkg.places?Object.values(pkg.places):[];
+    const wMsg=encodeURIComponent(`Hi ${d.driverName}! I want the "${pkg.name}" package.`);
+    const aMsg=encodeURIComponent(`Hi! Booking "${pkg.name}" with driver ${d.driverName} (Page #${pageId}).`);
+    const pkgJ=JSON.stringify(pkg).replace(/\\/g,'\\\\').replace(/`/g,'\\`');
 
-    // Serialise pkg safely for onclick
-    const pkgJson=JSON.stringify(pkg).replace(/'/g,"\\'");
-
-    const card=document.createElement('div');
-    card.className='pkg-card';
+    const card=document.createElement('div'); card.className='pkg-card';
     card.innerHTML=`
-      <div class="pkg-img-wrap" id="pg-${pkgId}">
-        ${photos.length>0
-          ? photos.map((u,i)=>`<img src="${u}" class="${i===0?'active':''}" alt="${pkg.name}" onerror="this.style.background='#f0e6d6'">`).join('')
-          : '<img src="" class="active" style="background:#f0e6d6;" alt="">'
-        }
-        ${photos.length>1?`<button class="pg-btn pg-prev" onclick="pgNav('${pkgId}',-1,${photos.length})">‹</button><button class="pg-btn pg-next" onclick="pgNav('${pkgId}',1,${photos.length})">›</button>`:''}
+      <div class="pkg-img-wrap" id="pg-${pid}">
+        ${photos.length
+          ? photos.map((u,i)=>`<img src="${u}" class="${i===0?'active':''}" onerror="this.style.background='#f0e6d6'">`).join('')
+          : '<img src="" class="active" style="background:#f0e6d6">'}
+        ${photos.length>1?`<button class="pg-btn pg-prev" onclick="pgNav('${pid}',-1,${photos.length})">‹</button><button class="pg-btn pg-next" onclick="pgNav('${pid}',1,${photos.length})">›</button>`:''}
         ${pkg.category?`<div class="pkg-cat-badge">${pkg.category}</div>`:''}
       </div>
       <div class="pkg-body">
         <div class="pkg-name">${pkg.name}</div>
         <div class="pkg-meta">
           ${pkg.duration?`<span>🕐 ${pkg.duration}</span>`:''}
-          ${placesArr.length>0?`<span>🏖️ ${placesArr.length} places</span>`:''}
+          ${places.length?`<span>🏖️ ${places.length} places</span>`:''}
         </div>
         ${pkg.description?`<div class="pkg-desc">${pkg.description}</div>`:''}
-        ${includes.length>0?`<div class="pkg-tags">${includes.map(t=>`<span class="pkg-tag">✓ ${t}</span>`).join('')}</div>`:''}
+        ${incs.length?`<div class="pkg-tags">${incs.map(t=>`<span class="pkg-tag">✓ ${t}</span>`).join('')}</div>`:''}
         <div class="pkg-footer">
           <div class="pkg-price">₹${pkg.price||'—'} <small>/person</small></div>
           <div class="pkg-actions">
-            <button class="view-details-btn" onclick='openPlacesModal(${pkgJson},"${driverWa}","${driver.driverName}")'>🏖️ View Places</button>
-            <a class="book-btn book-driver" href="https://wa.me/${driverWa}?text=${pkgWaMsg}" target="_blank">💬 Book with Driver</a>
-            <a class="book-btn book-admin" href="https://wa.me/${ADMIN_WA}?text=${pkgAdminMsg}" target="_blank">📋 Book via Admin</a>
+            <button class="view-places-btn" id="vb-${pid}">🏖️ View Places</button>
+            <a class="book-btn book-driver" href="https://wa.me/${dWa}?text=${wMsg}" target="_blank">💬 Book with Driver</a>
+            <a class="book-btn book-admin" href="https://wa.me/${ADMIN}?text=${aMsg}" target="_blank">📋 Book via Admin</a>
           </div>
         </div>
-      </div>
-    `;
-    pkgSection.appendChild(card);
+      </div>`;
+    pl.appendChild(card);
+
+    // Attach click via JS (avoids JSON-in-attribute escaping issues)
+    document.getElementById('vb-'+pid).onclick = () => openPlaces(pkg, dWa, d.driverName);
   });
 }
 
-function renderNotFound(el){
-  el.innerHTML=`
+function notFound(){
+  document.getElementById('app').innerHTML=`
     <div class="header" style="min-height:180px;display:flex;align-items:center;justify-content:center;">
       <div class="header-content"><div class="brand">Bhaskar <span>Holidays</span></div></div>
     </div>
@@ -544,8 +501,7 @@ function renderNotFound(el){
       <div class="not-found">
         <div style="font-size:4rem;margin-bottom:1rem;">🚕</div>
         <h2>Driver #${pageId} Not Found</h2>
-        <p>This page hasn't been assigned yet.</p>
-        <br>
+        <p>This page hasn't been assigned yet.</p><br>
         <a href="index.html" style="color:var(--primary);font-weight:700;text-decoration:none;">← Back to Bhaskar Holidays</a>
       </div>
     </div>`;
